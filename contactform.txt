@@ -1,0 +1,10 @@
+<label>名前<span class="text-danger">＊</span>
+    [text* your-name placeholder "山田　太郎"] </label>
+
+<label>メールアドレス <span class="text-danger">＊</span>
+    [email* your-email placeholder "○○○@○○○.○○"] </label>
+
+<label>メッセージ本文 (任意) <span class="text-danger">＊</span>
+    [textarea your-message placeholder "ご自由にご記入ください。"] </label>
+
+[submit "送信"]

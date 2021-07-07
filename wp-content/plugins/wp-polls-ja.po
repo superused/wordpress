@@ -1,0 +1,1378 @@
+# Copyright (C) 2015 WP-Polls
+# This file is distributed under the same license as the WP-Polls package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP-Polls 2.69\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/wp-polls\n"
+"POT-Creation-Date: 2015-12-06 07:32+0900\n"
+"PO-Revision-Date: 2015-12-06 08:51+0900\n"
+"Last-Translator: Yasuhiro Matsuda <hapisupu@gmail.com>\n"
+"Language-Team: hapisupu.com <hapisupu@gmail.com>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.6\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: polls-add.php:16 polls-add.php:104 polls-add.php:171 wp-polls.php:56
+msgid "Add Poll"
+msgstr "新規追加"
+
+#: polls-add.php:62
+msgid "Error In Adding Poll '%s'."
+msgstr "アンケート '%s' の追加中にエラーが発生しました。"
+
+#: polls-add.php:72 polls-manager.php:129
+msgid "Error In Adding Poll's Answer '%s'."
+msgstr "アンケートの回答 '%s' の追加中にエラーが発生しました。"
+
+#: polls-add.php:75
+msgid "Poll's Answer is empty."
+msgstr "アンケートの回答が入力されていません。"
+
+#: polls-add.php:82
+msgid ""
+"Poll '%s' (ID: %s) added successfully. Embed this poll with the shortcode: "
+"%s or go back to <a href=\"%s\">Manage Polls</a>"
+msgstr ""
+"アンケート '%s' (ID: %s) の追加が完了しました。 このアンケートは(ショートコー"
+"ド: %s )で追加できます。 <a href=\"%s\">アンケート管理画面</a>に戻る"
+
+#: polls-add.php:85
+msgid ""
+"Poll '%s' (ID: %s) (Shortcode: %s) added successfully, but there are some "
+"errors with the Poll's Answers. Embed this poll with the shortcode: %s or go "
+"back to <a href=\"%s\">Manage Polls</a>"
+msgstr ""
+"アンケート '%s' (ID: %s) (ショートコード: %s) の追加が完了しましたが、 回答に"
+"いくつかのエラーがあります。 このアンケートをショートコード: %s で埋め込む"
+"か、<a href=\"%s\">アンケート管理画面</a>に戻る"
+
+#: polls-add.php:90
+msgid "Poll Question is empty."
+msgstr "アンケートの質問が入力されていません。"
+
+#: polls-add.php:106 polls-manager.php:178
+msgid "Poll Question"
+msgstr "アンケートの質問"
+
+#: polls-add.php:109 polls-manager.php:181 polls-manager.php:332
+msgid "Question"
+msgstr "質問"
+
+#: polls-add.php:114 polls-manager.php:186
+msgid "Poll Answers"
+msgstr "アンケートの回答"
+
+#: polls-add.php:119 polls-manager.php:221
+msgid "Add Answer"
+msgstr "回答を追加"
+
+#: polls-add.php:126 polls-manager.php:208
+msgid "Answer %s"
+msgstr "回答 %s"
+
+#: polls-add.php:127 wp-polls.php:245
+msgid "Remove"
+msgstr "削除"
+
+#: polls-add.php:135 polls-manager.php:232
+msgid "Poll Multiple Answers"
+msgstr "複数回答できるアンケート"
+
+#: polls-add.php:138 polls-manager.php:235
+msgid "Allows Users To Select More Than One Answer?"
+msgstr "回答を複数選択できるようにしますか？"
+
+#: polls-add.php:141 polls-manager.php:238 polls-options.php:199
+#: polls-options.php:208 polls-options.php:325 wp-polls.php:1582
+msgid "No"
+msgstr "いいえ"
+
+#: polls-add.php:142 polls-logs.php:383 polls-manager.php:239
+#: polls-manager.php:461 polls-options.php:200 polls-options.php:209
+#: polls-options.php:326 wp-polls.php:1583
+msgid "Yes"
+msgstr "はい"
+
+#: polls-add.php:147 polls-manager.php:244
+msgid "Maximum Number Of Selected Answers Allowed?"
+msgstr "最大でいくつまで選択可能にしますか？"
+
+#: polls-add.php:160 polls-manager.php:261
+msgid "Poll Start/End Date"
+msgstr "アンケートの開始日時と終了日時"
+
+#: polls-add.php:163 polls-manager.php:264 polls-manager.php:334
+msgid "Start Date/Time"
+msgstr "開始日時"
+
+#: polls-add.php:167 polls-manager.php:272 polls-manager.php:335
+msgid "End Date/Time"
+msgstr "終了日時"
+
+#: polls-add.php:168 polls-manager.php:283
+msgid "Do NOT Expire This Poll"
+msgstr "期限を設けない"
+
+#: polls-add.php:171 polls-manager.php:307
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: polls-logs.php:34 polls-logs.php:35 polls-logs.php:38 polls-logs.php:70
+#: polls-logs.php:74 polls-logs.php:107 polls-logs.php:110 wp-polls.php:1334
+msgid "Guest"
+msgstr "ゲスト"
+
+#: polls-logs.php:128
+msgid "Poll's Logs"
+msgstr "アンケートログ"
+
+#: polls-logs.php:131
+msgid "There are a total of <strong>%s</strong> recorded vote for this poll."
+msgid_plural ""
+"There are a total of <strong>%s</strong> recorded votes for this poll."
+msgstr[0] "このアンケートの合計投票数は、 <strong>%s</strong> 件です。"
+
+#: polls-logs.php:132
+msgid ""
+"<strong>&raquo;</strong> <strong>%s</strong> vote is cast by registered users"
+msgid_plural ""
+"<strong>&raquo;</strong> <strong>%s</strong> votes are cast by registered "
+"users"
+msgstr[0] ""
+"<strong>&raquo;</strong> <strong>%s</strong> 件は登録ユーザーによるものです。"
+
+#: polls-logs.php:133
+msgid ""
+"<strong>&raquo;</strong> <strong>%s</strong> vote is cast by comment authors"
+msgid_plural ""
+"<strong>&raquo;</strong> <strong>%s</strong> votes are cast by comment "
+"authors"
+msgstr[0] ""
+"<strong>&raquo;</strong> <strong>%s</strong> 件はコメント作成者によるもので"
+"す。"
+
+#: polls-logs.php:134
+msgid "<strong>&raquo;</strong> <strong>%s</strong> vote is cast by guests"
+msgid_plural ""
+"<strong>&raquo;</strong> <strong>%s</strong> votes are cast by guests"
+msgstr[0] ""
+"<strong>&raquo;</strong> <strong>%s</strong> 件はゲストによるものです。"
+
+#: polls-logs.php:139
+msgid "Filter Poll's Logs"
+msgstr "アンケートログのフィルター"
+
+#: polls-logs.php:148
+msgid "Display All Users That Voted For"
+msgstr "次の項目に回答した全てのユーザーを表示"
+
+#: polls-logs.php:169 polls-logs.php:217
+msgid "Voters To EXCLUDE"
+msgstr "除外する回答者"
+
+#: polls-logs.php:171 polls-logs.php:219
+msgid "Registered Users"
+msgstr "登録済みユーザー"
+
+#: polls-logs.php:172 polls-logs.php:220
+msgid "Comment Authors"
+msgstr "コメント投稿者"
+
+#: polls-logs.php:173
+msgid "Guests"
+msgstr "ゲスト"
+
+#: polls-logs.php:177 polls-logs.php:225 polls-logs.php:260
+msgid "Filter"
+msgstr "フィルター"
+
+#: polls-logs.php:189
+msgid "Display Users That Voted For"
+msgstr "次の条件に合う回答者を表示"
+
+#: polls-logs.php:192
+msgid "More Than"
+msgstr "より多く"
+
+#: polls-logs.php:193
+msgid "More Than Or Exactly"
+msgstr "以上"
+
+#: polls-logs.php:194
+msgid "Exactly"
+msgstr "一致"
+
+#: polls-logs.php:195
+msgid "Less Than Or Exactly"
+msgstr "以下"
+
+#: polls-logs.php:196
+msgid "Less Than"
+msgstr "未満"
+
+#: polls-logs.php:203
+msgid "1 Answer"
+msgstr "1 件の回答"
+
+#: polls-logs.php:206 polls-logs.php:208
+msgid "%s Answer"
+msgid_plural "%s Answers"
+msgstr[0] "%s 件の回答"
+
+#: polls-logs.php:221
+msgid "Guests will automatically be excluded"
+msgstr "ゲストは自動的に除外されます"
+
+#: polls-logs.php:242
+msgid "Display What This User Has Voted"
+msgstr "次のユーザーが回答したものを表示"
+
+#: polls-logs.php:268
+msgid "Clear Filter"
+msgstr "フィルタをクリア"
+
+#: polls-logs.php:275
+msgid "Poll Logs"
+msgstr "回答ログ"
+
+#: polls-logs.php:280
+msgid ""
+"This default filter is limited to display only <strong>%s</strong> records."
+msgstr "<strong>%s</strong> 件だけ表示するように制限されています。"
+
+#: polls-logs.php:289 polls-logs.php:334 wp-polls.php:244
+msgid "Answer"
+msgstr "回答"
+
+#: polls-logs.php:290
+msgid "IP"
+msgstr "IP"
+
+#: polls-logs.php:291
+msgid "Host"
+msgstr "Host"
+
+#: polls-logs.php:292 polls-logs.php:341
+msgid "Date"
+msgstr "日時"
+
+#: polls-logs.php:299 polls-logs.php:329 polls-manager.php:266
+#: polls-manager.php:278 polls-manager.php:355 polls-manager.php:363
+#: wp-polls.php:445 wp-polls.php:450 wp-polls.php:568 wp-polls.php:573
+#: wp-polls.php:987 wp-polls.php:991
+msgid "%s @ %s"
+msgstr "%s @ %s"
+
+#: polls-logs.php:309 polls-logs.php:339
+msgid "User"
+msgstr "ユーザー"
+
+#: polls-logs.php:338
+msgid "No."
+msgstr "No."
+
+#: polls-logs.php:340
+msgid "IP/Host"
+msgstr "IP/Host"
+
+#: polls-logs.php:362
+msgid "Total number of records that matches this filter: <strong>%s</strong>"
+msgstr "このフィルタに一致するレコードの合計数: <strong>%s</strong>"
+
+#: polls-logs.php:369
+msgid "No poll logs matches the filter."
+msgstr "フィルタに一致した回答が見つかりません。"
+
+#: polls-logs.php:371 polls-logs.php:387
+msgid "No poll logs available for this poll."
+msgstr "このアンケートのログは利用できません。"
+
+#: polls-logs.php:378
+msgid "Delete Poll Logs"
+msgstr "アンケートログを削除"
+
+#: polls-logs.php:382
+msgid "Are You Sure You Want To Delete Logs For This Poll Only?"
+msgstr "本当にこのアンケートログを削除しますか？"
+
+#: polls-logs.php:384 wp-polls.php:239 wp-polls.php:1416
+msgid "Delete Logs For This Poll Only"
+msgstr "このアンケートログのみ削除"
+
+#: polls-logs.php:384
+msgid ""
+"You are about to delete poll logs for this poll '%s' ONLY. This action is "
+"not reversible."
+msgstr ""
+"このアンケート '%s' のログを削除しようとしています。このアクションは元に戻せ"
+"ません。"
+
+#: polls-logs.php:391 polls-manager.php:469
+msgid ""
+"Note: If your logging method is by IP and Cookie or by Cookie, users may "
+"still be unable to vote if they have voted before as the cookie is still "
+"stored in their computer."
+msgstr ""
+"注：ログの取得設定がIPとCookie、またはCookieの場合、Cookieがブラウザに保存さ"
+"れているために回答できない場合があります。"
+
+#: polls-manager.php:36 polls-manager.php:176 polls-manager.php:295
+msgid "Edit Poll"
+msgstr "アンケートを編集"
+
+#: polls-manager.php:96
+msgid "No Changes Had Been Made To Poll's Question '%s'."
+msgstr "アンケートの質問 '%s' に対して変更は行われませんでした。"
+
+#: polls-manager.php:110
+msgid "No Changes Had Been Made To Poll's Answer '%s'."
+msgstr "アンケートの回答 '%s' に対して変更は行われませんでした。"
+
+#: polls-manager.php:112
+msgid "Poll's Answer '%s' Edited Successfully."
+msgstr "アンケートの回答 '%s' を編集しました。"
+
+#: polls-manager.php:116
+msgid "Invalid Poll '%s'."
+msgstr "アンケート '%s' は無効"
+
+#: polls-manager.php:131
+msgid "Poll's Answer '%s' Added Successfully."
+msgstr "アンケートの回答 '%s' を追加しました。 "
+
+#: polls-manager.php:138
+msgid "Poll '%s' Edited Successfully."
+msgstr "アンケート '%s' を編集しました。"
+
+#: polls-manager.php:190
+msgid "Answer No."
+msgstr "回答番号"
+
+#: polls-manager.php:191
+msgid "Answer Text"
+msgstr "回答のテキスト"
+
+#: polls-manager.php:192
+msgid "No. Of Votes"
+msgstr "回答数"
+
+#: polls-manager.php:201
+msgid "Null Votes"
+msgstr "回答なし"
+
+#: polls-manager.php:210 polls-manager.php:410
+msgid "Delete"
+msgstr "削除"
+
+#: polls-manager.php:210
+msgid "You are about to delete this poll's answer '%s'."
+msgstr "アンケートの回答 '%s' を削除します。"
+
+#: polls-manager.php:222
+msgid "Total Votes:"
+msgstr "総回答数:"
+
+#: polls-manager.php:227 polls-manager.php:444
+msgid "Total Voters:"
+msgstr "総回答者数:"
+
+#: polls-manager.php:267
+msgid "Edit Start Date/Time"
+msgstr "開始日/時間の編集"
+
+#: polls-manager.php:276
+msgid "This Poll Will Not Expire"
+msgstr "アンケートの期限なし"
+
+#: polls-manager.php:305 wp-polls.php:243 wp-polls.php:1459
+msgid "Close Poll"
+msgstr "アンケートを終了"
+
+#: polls-manager.php:305
+msgid "You are about to CLOSE this poll '%s'."
+msgstr "このアンケート '%s' を終了します。"
+
+#: polls-manager.php:306 wp-polls.php:242 wp-polls.php:1447
+msgid "Open Poll"
+msgstr "アンケートを開始"
+
+#: polls-manager.php:306
+msgid "You are about to OPEN this poll '%s'."
+msgstr "このアンケート '%s' を開始します。"
+
+#: polls-manager.php:325 wp-polls.php:55
+msgid "Manage Polls"
+msgstr "アンケート管理"
+
+#: polls-manager.php:326 wp-polls.php:53 wp-polls.php:1536 wp-polls.php:1571
+msgid "Polls"
+msgstr "アンケート"
+
+#: polls-manager.php:331
+msgid "ID"
+msgstr "ID"
+
+#: polls-manager.php:333 polls-templates.php:121 polls-templates.php:124
+#: wp-polls.php:1735 wp-polls.php:1738
+msgid "Total Voters"
+msgstr "総回答者数"
+
+#: polls-manager.php:336
+msgid "Status"
+msgstr "ステータス"
+
+#: polls-manager.php:337
+msgid "Action"
+msgstr "アクション"
+
+#: polls-manager.php:361 wp-polls.php:448 wp-polls.php:571 wp-polls.php:989
+msgid "No Expiry"
+msgstr "期限なし"
+
+#: polls-manager.php:386 polls-manager.php:390 polls-manager.php:393
+msgid "Displayed:"
+msgstr "表示:"
+
+#: polls-manager.php:401
+msgid "Open"
+msgstr "実施中"
+
+#: polls-manager.php:403
+msgid "Future"
+msgstr "開始待ち"
+
+#: polls-manager.php:405
+msgid "Closed"
+msgstr "終了"
+
+#: polls-manager.php:408
+msgid "Logs"
+msgstr "ログ"
+
+#: polls-manager.php:409
+msgid "Edit"
+msgstr "編集"
+
+#: polls-manager.php:410
+msgid "You are about to delete this poll, '%s'."
+msgstr "アンケート '%s' を削除しようとしています。"
+
+#: polls-manager.php:418
+msgid "No Polls Found"
+msgstr "アンケートなし"
+
+#: polls-manager.php:428
+msgid "Polls Stats:"
+msgstr "アンケートのステータス:"
+
+#: polls-manager.php:432
+msgid "Total Polls:"
+msgstr "アンケート総数:"
+
+#: polls-manager.php:436
+msgid "Total Polls' Answers:"
+msgstr "総アンケート回答項目数:"
+
+#: polls-manager.php:440
+msgid "Total Votes Cast:"
+msgstr "総回答数:"
+
+#: polls-manager.php:453
+msgid "Polls Logs"
+msgstr "アンケートログ"
+
+#: polls-manager.php:460
+msgid "Are You Sure You Want To Delete All Polls Logs?"
+msgstr "すべての投票のログを削除してもよろしいですか？"
+
+#: polls-manager.php:462 wp-polls.php:237 wp-polls.php:1404
+msgid "Delete All Logs"
+msgstr "すべてのログを削除"
+
+#: polls-manager.php:462
+msgid "You are about to delete all poll logs. This action is not reversible."
+msgstr ""
+"すべてのアンケートログを削除しようとしています。このアクションは元に戻せませ"
+"ん。"
+
+#: polls-manager.php:465 wp-polls.php:236
+msgid "No poll logs available."
+msgstr "アンケートログ利用不可"
+
+#: polls-options.php:70 polls-options.php:130 polls-options.php:133
+msgid "Poll Bar Style"
+msgstr "グラフのスタイル"
+
+#: polls-options.php:71
+msgid "Poll AJAX Style"
+msgstr "AJAXのスタイル"
+
+#: polls-options.php:72
+msgid "Sort Poll Answers By Option"
+msgstr "オプションで回答をソート"
+
+#: polls-options.php:73
+msgid "Sort Order Of Poll Answers Option"
+msgstr "回答オプションのソート順"
+
+#: polls-options.php:74
+msgid "Sort Poll Results By Option"
+msgstr "オプションで結果をソート"
+
+#: polls-options.php:75
+msgid "Sort Order Of Poll Results Option"
+msgstr "結果オプションのソート順"
+
+#: polls-options.php:76
+msgid "Number Of Polls Per Page To Display In Poll Archive Option"
+msgstr "ページごとの数はアーカイブオプションに表示"
+
+#: polls-options.php:77
+msgid "Type Of Polls To Display In Poll Archive Option"
+msgstr "アンケートの種類は、アーカイブオプションに表示"
+
+#: polls-options.php:78
+msgid "Poll Archive URL Option"
+msgstr "アーカイブのURLオプション"
+
+#: polls-options.php:79
+msgid "Show Poll Achive Link Option"
+msgstr "アーカイブリンクオプションを見る"
+
+#: polls-options.php:80
+msgid "Current Active Poll Option"
+msgstr "現在アクティブなオプション"
+
+#: polls-options.php:81
+msgid "Poll Close Option"
+msgstr "終了オプション"
+
+#: polls-options.php:82 polls-options.php:280
+msgid "Logging Method"
+msgstr "ログ取得方法"
+
+#: polls-options.php:83
+msgid "Cookie And Log Expiry Option"
+msgstr "クッキーとログの有効期限"
+
+#: polls-options.php:84
+msgid "Allow To Vote Option"
+msgstr "回答オプションを許可"
+
+#: polls-options.php:89 polls-templates.php:84
+msgid "Updated"
+msgstr "更新"
+
+#: polls-options.php:94 polls-templates.php:89
+msgid "No Poll Option Updated"
+msgstr "オプションを更新しない"
+
+#: polls-options.php:128 wp-polls.php:57
+msgid "Poll Options"
+msgstr "オプション"
+
+#: polls-options.php:160
+msgid "Use CSS Style"
+msgstr "CSSを使用する"
+
+#: polls-options.php:164
+msgid "Poll Bar Background"
+msgstr "グラフの背景"
+
+#: polls-options.php:169
+msgid "Poll Bar Border"
+msgstr "グラフのボーダー"
+
+#: polls-options.php:174
+msgid "Poll Bar Height"
+msgstr "グラフの高さ"
+
+#: polls-options.php:178
+msgid "Your poll bar will look like this"
+msgstr "グラフは次のようになります"
+
+#: polls-options.php:193
+msgid "Polls AJAX Style"
+msgstr "AJAXスタイル"
+
+#: polls-options.php:196
+msgid "Show Loading Image With Text"
+msgstr "読込中の画像とテキストを表示する"
+
+#: polls-options.php:205
+msgid "Show Fading In And Fading Out Of Poll"
+msgstr "アンケートをフェードイン/アウトする"
+
+#: polls-options.php:216
+msgid "Sorting Of Poll Answers"
+msgstr "アンケート回答項目の表示順"
+
+#: polls-options.php:219
+msgid "Sort Poll Answers By:"
+msgstr "表示順を並び替えるキー:"
+
+#: polls-options.php:222 polls-options.php:247
+msgid "Exact Order"
+msgstr "追加した順"
+
+#: polls-options.php:223 polls-options.php:248
+msgid "Alphabetical Order"
+msgstr "アルファベット順"
+
+#: polls-options.php:224 polls-options.php:249
+msgid "Random Order"
+msgstr "ランダム"
+
+#: polls-options.php:229
+msgid "Sort Order Of Poll Answers:"
+msgstr "並び替える順序:"
+
+#: polls-options.php:232 polls-options.php:257
+msgid "Ascending"
+msgstr "昇順"
+
+#: polls-options.php:233 polls-options.php:258
+msgid "Descending"
+msgstr "降順"
+
+#: polls-options.php:240
+msgid "Sorting Of Poll Results"
+msgstr "アンケート結果の表示順"
+
+#: polls-options.php:243
+msgid "Sort Poll Results By:"
+msgstr "表示順を並び替えるキー:"
+
+#: polls-options.php:246
+msgid "Votes Cast"
+msgstr "回答数"
+
+#: polls-options.php:254
+msgid "Sort Order Of Poll Results:"
+msgstr "並び替える順序:"
+
+#: polls-options.php:265
+msgid "Allow To Vote"
+msgstr "回答を許可"
+
+#: polls-options.php:268
+msgid "Who Is Allowed To Vote?"
+msgstr "誰が回答できますか？"
+
+#: polls-options.php:271
+msgid "Guests Only"
+msgstr "ゲストのみ"
+
+#: polls-options.php:272
+msgid "Registered Users Only"
+msgstr "登録者のみ"
+
+#: polls-options.php:273
+msgid "Registered Users And Guests"
+msgstr "登録者とゲスト"
+
+#: polls-options.php:283
+msgid "Poll Logging Method:"
+msgstr "ログ取得方法:"
+
+#: polls-options.php:286
+msgid "Do Not Log"
+msgstr "ログを取得しない"
+
+#: polls-options.php:287
+msgid "Logged By Cookie"
+msgstr "Cookie"
+
+#: polls-options.php:288
+msgid "Logged By IP"
+msgstr "IP"
+
+#: polls-options.php:289
+msgid "Logged By Cookie And IP"
+msgstr "CookieとIP"
+
+#: polls-options.php:290
+msgid "Logged By Username"
+msgstr "ユーザー名"
+
+#: polls-options.php:295
+msgid "Expiry Time For Cookie And Log:"
+msgstr "Cookieとログの有効期限:"
+
+#: polls-options.php:296
+msgid "seconds (0 to disable)"
+msgstr "秒（0を入力すると無効）"
+
+#: polls-options.php:301
+msgid "Poll Archive"
+msgstr "アーカイブ"
+
+#: polls-options.php:304
+msgid "Number Of Polls Per Page:"
+msgstr "1ページに表示するアンケートの数:"
+
+#: polls-options.php:308
+msgid "Type Of Polls To Display In Poll Archive:"
+msgstr "アーカイブに表示するアンケートの種類:"
+
+#: polls-options.php:311
+msgid "Closed Polls Only"
+msgstr "終了分のみ"
+
+#: polls-options.php:312
+msgid "Opened Polls Only"
+msgstr "実施中のみ"
+
+#: polls-options.php:313
+msgid "Closed And Opened Polls"
+msgstr "終了分と実施中"
+
+#: polls-options.php:318
+msgid "Poll Archive URL:"
+msgstr "アーカイブのURL:"
+
+#: polls-options.php:322
+msgid "Display Poll Archive Link Below Poll?"
+msgstr "アンケートの下にアーカイブURLを表示させますか？"
+
+#: polls-options.php:331
+msgid "Note"
+msgstr "注"
+
+#: polls-options.php:332
+msgid ""
+"Only polls' results will be shown in the Poll Archive regardless of whether "
+"the poll is closed or opened."
+msgstr ""
+"アーカイブには、アンケートが受け付け中かどうかに関わらず結果だけが表示されま"
+"す。"
+
+#: polls-options.php:337 polls-options.php:340
+msgid "Current Active Poll"
+msgstr "現在実施中のアンケート"
+
+#: polls-options.php:343 wp-polls.php:1590
+msgid "Do NOT Display Poll (Disable)"
+msgstr "アンケートを表示しない（無効）"
+
+#: polls-options.php:344 wp-polls.php:1591
+msgid "Display Random Poll"
+msgstr "ランダムに表示する"
+
+#: polls-options.php:345 wp-polls.php:1592
+msgid "Display Latest Poll"
+msgstr "最新のアンケートを表示する"
+
+#: polls-options.php:365
+msgid "When Poll Is Closed"
+msgstr "アンケートが終了した時"
+
+#: polls-options.php:368
+msgid "Display Poll's Results"
+msgstr "結果を表示する"
+
+#: polls-options.php:369
+msgid "Display Disabled Poll's Voting Form"
+msgstr "無効なアンケートのフォームを表示する"
+
+#: polls-options.php:370
+msgid "Do Not Display Poll In Post/Sidebar"
+msgstr "記事/サイドバーにアンケートが表示されないようにする"
+
+#: polls-options.php:378 polls-templates.php:494
+msgid "Save Changes"
+msgstr "変更を保存"
+
+#: polls-templates.php:65
+msgid "Voting Form Header Template"
+msgstr "回答フォームのヘッダーテンプレート"
+
+#: polls-templates.php:66
+msgid "Voting Form Body Template"
+msgstr "回答フォームのボディーテンプレート"
+
+#: polls-templates.php:67
+msgid "Voting Form Footer Template"
+msgstr "回答フォームのフッターテンプレート"
+
+#: polls-templates.php:68
+msgid "Result Header Template"
+msgstr "アンケート結果のヘッダーテンプレート"
+
+#: polls-templates.php:69
+msgid "Result Body Template"
+msgstr "アンケート結果のボディーテンプレート"
+
+#: polls-templates.php:70
+msgid "Result Body2 Template"
+msgstr "アンケート結果のボディー2テンプレート"
+
+#: polls-templates.php:71
+msgid "Result Footer Template"
+msgstr "アンケート結果のフッターテンプレート"
+
+#: polls-templates.php:72
+msgid "Result Footer2 Template"
+msgstr "アンケート結果のフッター2テンプレート"
+
+#: polls-templates.php:73
+msgid "Poll Archive Link Template"
+msgstr "アーカイブリンクテンプレート"
+
+#: polls-templates.php:74
+msgid "Poll Archive Poll Header Template"
+msgstr "アーカイブアンケートのヘッダーテンプレート"
+
+#: polls-templates.php:75
+msgid "Poll Archive Poll Footer Template"
+msgstr "アーカイブアンケートのフッターテンプレート"
+
+#: polls-templates.php:76
+msgid "Poll Archive Paging Header Template"
+msgstr "アーカイブページングのヘッダーテンプレート"
+
+#: polls-templates.php:77
+msgid "Poll Archive Paging Footer Template"
+msgstr ""
+"アーカイブページングのフッター\n"
+"テンプレート"
+
+#: polls-templates.php:78
+msgid "Poll Disabled Template"
+msgstr "無効なアンケートのテンプレート"
+
+#: polls-templates.php:79
+msgid "Poll Error Template"
+msgstr "アンケートエラーテンプレート"
+
+#: polls-templates.php:109 polls-templates.php:124 wp-polls.php:1726
+#: wp-polls.php:1739
+msgid "Vote"
+msgstr "回答"
+
+#: polls-templates.php:109 wp-polls.php:1727
+msgid "View Results Of This Poll"
+msgstr "このアンケートの結果の表示する"
+
+#: polls-templates.php:109 wp-polls.php:1727
+msgid "View Results"
+msgstr "結果を表示する"
+
+#: polls-templates.php:115 polls-templates.php:118 wp-polls.php:1732
+#: wp-polls.php:1733
+msgid ","
+msgstr ""
+
+#: polls-templates.php:115 polls-templates.php:118 wp-polls.php:1732
+#: wp-polls.php:1733
+msgid "Votes"
+msgstr "票"
+
+#: polls-templates.php:118 wp-polls.php:1733
+msgid "You Have Voted For This Choice"
+msgstr "回答しました"
+
+#: polls-templates.php:124 wp-polls.php:1739
+msgid "Vote For This Poll"
+msgstr "このアンケートに回答する"
+
+#: polls-templates.php:127 wp-polls.php:1765
+msgid "Polls Archive"
+msgstr "アンケートアーカイブ"
+
+#: polls-templates.php:133 wp-polls.php:1769
+msgid "Start Date:"
+msgstr "開始日時:"
+
+#: polls-templates.php:133 wp-polls.php:1769
+msgid "End Date:"
+msgstr "終了日時:"
+
+#: polls-templates.php:142 wp-polls.php:1741
+msgid "Sorry, there are no polls available at the moment."
+msgstr "現在実施しているアンケートはありません。"
+
+#: polls-templates.php:145 wp-polls.php:1742
+msgid "An error has occurred when processing your poll."
+msgstr "回答の処理中にエラーが発生しました。"
+
+#: polls-templates.php:156 wp-polls.php:58
+msgid "Poll Templates"
+msgstr "テンプレート設定"
+
+#: polls-templates.php:158
+msgid "Template Variables"
+msgstr "テンプレート変数"
+
+#: polls-templates.php:163
+msgid "Display the poll's ID"
+msgstr "アンケートIDを表示"
+
+#: polls-templates.php:167
+msgid "Display the poll's answer ID"
+msgstr "回答IDを表示"
+
+#: polls-templates.php:173
+msgid "Display the poll's question"
+msgstr "質問を表示"
+
+#: polls-templates.php:177
+msgid "Display the poll's answer"
+msgstr "回答を表示"
+
+#: polls-templates.php:183
+msgid ""
+"Display the poll's total votes NOT the number of people who voted for the "
+"poll"
+msgstr "合計の回答数（投票人数ではない）"
+
+#: polls-templates.php:187
+msgid "Display the poll's answer without HTML formatting."
+msgstr "アンケートの回答を HTML フォーマットなしで表示"
+
+#: polls-templates.php:193
+msgid "Displays URL to poll's result"
+msgstr "結果URLを表示"
+
+#: polls-templates.php:197
+msgid "Display the poll's answer votes"
+msgstr "回答数を表示"
+
+#: polls-templates.php:203
+msgid "Display the poll's most voted answer"
+msgstr "最も多い回答を表示"
+
+#: polls-templates.php:207
+msgid "Display the poll's answer percentage"
+msgstr "回答の割合(%)を表示"
+
+#: polls-templates.php:213
+msgid "Display the poll's answer votes for the most voted answer"
+msgstr "最も多い回答の回答数を表示"
+
+#: polls-templates.php:217
+msgid "Display the poll's answer image width"
+msgstr "回答画像の幅を表示"
+
+#: polls-templates.php:223
+msgid "Display the poll's answer percentage for the most voted answer"
+msgstr "最も多い回答の割合(%)を表示"
+
+#: polls-templates.php:227
+msgid "Display the poll's least voted answer"
+msgstr "最も少ない回答を表示"
+
+#: polls-templates.php:233
+msgid "Display the poll's start date/time"
+msgstr "開始日時を表示"
+
+#: polls-templates.php:237
+msgid "Display the poll's answer votes for the least voted answer"
+msgstr "最も少ない回答の回答数を表示"
+
+#: polls-templates.php:243
+msgid "Display the poll's end date/time"
+msgstr "終了日時を表示"
+
+#: polls-templates.php:247
+msgid "Display the poll's answer percentage for the least voted answer"
+msgstr "最も少ない回答の割合(%)を表示"
+
+#: polls-templates.php:253
+msgid ""
+"Display the the maximum number of answers the user can choose if the poll "
+"supports multiple answers"
+msgstr "複数回答をサポートしている場合、選択できる回答の最大数を表示"
+
+#: polls-templates.php:257
+msgid ""
+"Display \"checkbox\" or \"radio\" input types depending on the poll type"
+msgstr "アンケートの種類に応じて\"checkbox\" か \"radio\" の入力タイプを表示"
+
+#: polls-templates.php:263
+msgid ""
+"Display the number of people who voted for the poll NOT the total votes of "
+"the poll"
+msgstr "アンケートに回答した人数を表示（アンケートの総回答数ではない）"
+
+#: polls-templates.php:267
+msgid "Display the poll archive URL"
+msgstr "アンケートアーカイブのURLを表示する"
+
+#: polls-templates.php:272
+msgid ""
+"Note: <strong>%POLL_TOTALVOTES%</strong> and <strong>%POLL_TOTALVOTERS%</"
+"strong> will be different if your poll supports multiple answers. If your "
+"poll allows only single answer, both value will be the same."
+msgstr ""
+"注記: <strong>%POLL_TOTALVOTES%</strong> と <strong>%POLL_TOTALVOTERS%</"
+"strong> は複数回答を設定するかどうかによって違ってきます。複数回答を設定しな"
+"い場合は両方の値は同じになります。"
+
+#: polls-templates.php:278
+msgid "Poll Voting Form Templates"
+msgstr "アンケートフォームのテンプレート"
+
+#: polls-templates.php:282
+msgid "Voting Form Header:"
+msgstr "回答フォームのヘッダー:"
+
+#: polls-templates.php:283 polls-templates.php:298 polls-templates.php:311
+#: polls-templates.php:327 polls-templates.php:342 polls-templates.php:357
+#: polls-templates.php:372 polls-templates.php:392 polls-templates.php:417
+#: polls-templates.php:426 polls-templates.php:435 polls-templates.php:454
+#: polls-templates.php:463 polls-templates.php:477 polls-templates.php:486
+msgid "Allowed Variables:"
+msgstr "利用可能な変数:"
+
+#: polls-templates.php:291 polls-templates.php:304 polls-templates.php:315
+#: polls-templates.php:335 polls-templates.php:350 polls-templates.php:365
+#: polls-templates.php:385 polls-templates.php:405 polls-templates.php:419
+#: polls-templates.php:428 polls-templates.php:447 polls-templates.php:456
+#: polls-templates.php:465 polls-templates.php:479 polls-templates.php:488
+msgid "Restore Default Template"
+msgstr "デフォルトテンプレートに戻す"
+
+#: polls-templates.php:297
+msgid "Voting Form Body:"
+msgstr "回答フォームのボディー:"
+
+#: polls-templates.php:310
+msgid "Voting Form Footer:"
+msgstr "回答フォームのフッター:"
+
+#: polls-templates.php:322
+msgid "Poll Result Templates"
+msgstr "アンケート結果のテンプレート"
+
+#: polls-templates.php:326
+msgid "Result Header:"
+msgstr "結果のヘッダー:"
+
+#: polls-templates.php:341 polls-templates.php:356
+msgid "Result Body:"
+msgstr "結果のボディー:"
+
+#: polls-templates.php:341 polls-templates.php:391
+msgid "Displayed When The User HAS NOT Voted"
+msgstr "ユーザーが未回答の状態の時に表示"
+
+#: polls-templates.php:356 polls-templates.php:371
+msgid "Displayed When The User HAS Voted"
+msgstr "ユーザーが回答した後に表示"
+
+#: polls-templates.php:371 polls-templates.php:391
+msgid "Result Footer:"
+msgstr "結果のフッター:"
+
+#: polls-templates.php:412
+msgid "Poll Archive Templates"
+msgstr "アンケートアーカイブのテンプレート"
+
+#: polls-templates.php:416
+msgid "Poll Archive Link"
+msgstr "アンケートアーカイブのリンク"
+
+#: polls-templates.php:416
+msgid "Template For Displaying Poll Archive Link"
+msgstr "アンケートアーカイブのリンクを表示するテンプレート"
+
+#: polls-templates.php:425
+msgid "Individual Poll Header"
+msgstr "個別アンケートのヘッダー"
+
+#: polls-templates.php:425
+msgid "Displayed Before Each Poll In The Poll Archive"
+msgstr "アンケートアーカイブの各アンケートの前に表示されます"
+
+#: polls-templates.php:427 polls-templates.php:455 polls-templates.php:464
+#: polls-templates.php:478 polls-templates.php:487
+msgid "N/A"
+msgstr "無し"
+
+#: polls-templates.php:434
+msgid "Individual Poll Footer"
+msgstr "個別アンケートのフッター"
+
+#: polls-templates.php:434
+msgid "Displayed After Each Poll In The Poll Archive"
+msgstr "アンケートアーカイブの各アンケートの後に表示されます"
+
+#: polls-templates.php:453
+msgid "Paging Header"
+msgstr "ページングのヘッダー"
+
+#: polls-templates.php:453
+msgid "Displayed Before Paging In The Poll Archive"
+msgstr "アンケートアーカイブのページングの前に表示されます"
+
+#: polls-templates.php:462
+msgid "Paging Footer"
+msgstr "ページングのフッター"
+
+#: polls-templates.php:462
+msgid "Displayed After Paging In The Poll Archive"
+msgstr "アンケートアーカイブのページングの後に表示されます"
+
+#: polls-templates.php:472
+msgid "Poll Misc Templates"
+msgstr "その他のテンプレート"
+
+#: polls-templates.php:476
+msgid "Poll Disabled"
+msgstr "無効なアンケート"
+
+#: polls-templates.php:476
+msgid "Displayed When The Poll Is Disabled"
+msgstr "投票が無効になっているときに表示"
+
+#: polls-templates.php:485
+msgid "Poll Error"
+msgstr "アンケートエラー"
+
+#: polls-templates.php:485
+msgid "Displayed When An Error Has Occured While Processing The Poll"
+msgstr "アンケート処理中にエラーが起こった時に表示されます"
+
+#: wp-polls.php:216
+msgid "Your last request is still being processed. Please wait a while ..."
+msgstr "リクエストを処理中です。しばらくお待ちください..."
+
+#: wp-polls.php:217
+msgid "Please choose a valid poll answer."
+msgstr "有効なアンケートを選択してください。"
+
+#: wp-polls.php:218
+msgid "Maximum number of choices allowed: "
+msgstr "選択肢の最大数が許可されました:"
+
+#: wp-polls.php:235 wp-polls.php:1471
+msgid "Delete Poll"
+msgstr "アンケート削除"
+
+#: wp-polls.php:238
+msgid "Please check the \\'Yes\\' checkbox if you want to delete all logs."
+msgstr "すべてのログを削除する場合は、「はい」にチェックを入れて下さい。"
+
+#: wp-polls.php:240
+msgid ""
+"Please check the \\'Yes\\' checkbox if you want to delete all logs for this "
+"poll ONLY."
+msgstr ""
+"このアンケートのすべてのログを削除する場合は、「はい」にチェックを入れて下さ"
+"い。"
+
+#: wp-polls.php:241 wp-polls.php:1430
+msgid "Delete Poll Answer"
+msgstr "アンケートを削除"
+
+#: wp-polls.php:259
+msgid "Poll"
+msgstr "アンケート"
+
+#: wp-polls.php:260 wp-polls.php:297
+msgid "Enter Poll ID"
+msgstr "アンケートIDを入力"
+
+#: wp-polls.php:262 wp-polls.php:298
+msgid "Error: Poll ID must be numeric"
+msgstr "エラー: アンケートIDは半角数字を入力して下さい。"
+
+#: wp-polls.php:262 wp-polls.php:299
+msgid "Please enter Poll ID again"
+msgstr "もう一度アンケートIDを入力して下さい。"
+
+#: wp-polls.php:300
+msgid "Insert Poll"
+msgstr "アンケートを挿入"
+
+#: wp-polls.php:526 wp-polls.php:711
+msgid "Loading"
+msgstr "読み込み中"
+
+#: wp-polls.php:764
+msgid ""
+"Note: There is a poll embedded within this post, please visit the site to "
+"participate in this post's poll."
+msgstr ""
+"注：この記事内にアンケートがあります。アンケートへのご参加をお願いします。"
+
+#: wp-polls.php:1130
+msgid "Page %s of %s"
+msgstr "%s / %s"
+
+#: wp-polls.php:1132
+msgid "&laquo; First"
+msgstr "&laquo; 最初"
+
+#: wp-polls.php:1136
+msgid "&laquo;"
+msgstr ""
+
+#: wp-polls.php:1146
+msgid "&raquo;"
+msgstr ""
+
+#: wp-polls.php:1150
+msgid "Last &raquo;"
+msgstr "最後 &raquo;"
+
+#: wp-polls.php:1305
+msgid "Invalid Poll ID"
+msgstr "無効なアンケートID"
+
+#: wp-polls.php:1312
+msgid "Failed To Verify Referrer"
+msgstr "リファラーの確認に失敗しました。"
+
+#: wp-polls.php:1364
+msgid "Unable To Update Poll Total Votes And Poll Total Voters. Poll ID #%s"
+msgstr "総回答数と総回答者数は更新できません。アンケートID #%s"
+
+#: wp-polls.php:1367
+msgid "You Had Already Voted For This Poll. Poll ID #%s"
+msgstr "このアンケートには既に回答済みです。アンケートID #%s"
+
+#: wp-polls.php:1370
+msgid "Poll ID #%s is closed"
+msgstr "アンケートID #%s は終了しています。"
+
+#: wp-polls.php:1373
+msgid "Invalid Poll ID. Poll ID #%s"
+msgstr "無効なIDです。アンケートID #%s"
+
+#: wp-polls.php:1409
+msgid "All Polls Logs Have Been Deleted."
+msgstr "すべてのアンケートログが削除されました。"
+
+#: wp-polls.php:1411
+msgid "An Error Has Occurred While Deleting All Polls Logs."
+msgstr "すべてのアンケートログの削除中にエラーが発生しました。"
+
+#: wp-polls.php:1423
+msgid "All Logs For '%s' Has Been Deleted."
+msgstr "'%s' のすべてのログが削除されました。"
+
+#: wp-polls.php:1425
+msgid "An Error Has Occurred While Deleting All Logs For '%s'"
+msgstr "'%s' のすべてのログの削除中にエラーが発生しました。"
+
+#: wp-polls.php:1441
+msgid "Poll Answer '%s' Deleted Successfully."
+msgstr "回答 '%s' は削除されました。"
+
+#: wp-polls.php:1443
+msgid "Error In Deleting Poll Answer '%s'."
+msgstr "回答 '%s' の削除中にエラーが発生しました。"
+
+#: wp-polls.php:1453
+msgid "Poll '%s' Is Now Opened"
+msgstr "アンケート '%s' を実施中です。"
+
+#: wp-polls.php:1455
+msgid "Error Opening Poll '%s'"
+msgstr "アンケート '%s' 開始時にエラーが発生しました。"
+
+#: wp-polls.php:1465
+msgid "Poll '%s' Is Now Closed"
+msgstr "アンケート '%s' は終了しました"
+
+#: wp-polls.php:1467
+msgid "Error Closing Poll '%s'"
+msgstr "アンケート '%s' 終了時にエラーが発生しました。"
+
+#: wp-polls.php:1480
+msgid "Error In Deleting Poll '%s' Question"
+msgstr "アンケート '%s' の質問削除時にエラーが発生しました。"
+
+#: wp-polls.php:1483
+msgid "Poll '%s' Deleted Successfully"
+msgstr "アンケート '%s' を削除しました。"
+
+#. Plugin Name of the plugin/theme
+#: wp-polls.php:1508 wp-polls.php:1510 wp-polls.php:1520
+msgid "WP-Polls"
+msgstr ""
+
+#: wp-polls.php:1522
+msgid "<strong>%s</strong> poll was created."
+msgid_plural "<strong>%s</strong> polls were created."
+msgstr[0] ""
+
+#: wp-polls.php:1523
+msgid "<strong>%s</strong> polls' answer was given."
+msgid_plural "<strong>%s</strong> polls' answers were given."
+msgstr[0] ""
+
+#: wp-polls.php:1524
+msgid "<strong>%s</strong> vote was cast."
+msgid_plural "<strong>%s</strong> votes were cast."
+msgstr[0] ""
+
+#: wp-polls.php:1535
+msgid "WP-Polls polls"
+msgstr "WP-Polls アンケート"
+
+#: wp-polls.php:1577
+msgid "Title:"
+msgstr "タイトル:"
+
+#: wp-polls.php:1580
+msgid "Display Polls Archive Link Below Poll?"
+msgstr "アンケートの下にアーカイブのリンクを表示しますか？"
+
+#: wp-polls.php:1588
+msgid "Poll To Display:"
+msgstr "表示するアンケート:"
+
+#: wp-polls.php:1710
+msgid "How Is My Site?"
+msgstr "私のサイトはどうですか？"
+
+#: wp-polls.php:1713
+msgid "Good"
+msgstr "良い"
+
+#: wp-polls.php:1714
+msgid "Excellent"
+msgstr "すばらしい"
+
+#: wp-polls.php:1715
+msgid "Bad"
+msgstr "悪い"
+
+#: wp-polls.php:1716
+msgid "Can Be Improved"
+msgstr "改善可能"
+
+#: wp-polls.php:1717
+msgid "No Comments"
+msgstr "コメントなし"
+
+#. Plugin URI of the plugin/theme
+msgid "http://lesterchan.net/portfolio/programming/php/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Adds an AJAX poll system to your WordPress blog. You can easily include a "
+"poll into your WordPress's blog post/page. WP-Polls is extremely "
+"customizable via templates and css styles and there are tons of options for "
+"you to choose to ensure that WP-Polls runs the way you wanted. It now "
+"supports multiple selection of answers."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Lester 'GaMerZ' Chan"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://lesterchan.net"
+msgstr ""

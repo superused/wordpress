@@ -3,7 +3,7 @@
 if(!current_user_can('manage_polls')) {
     die('Access Denied');
 }
-$poll_id = 1;
+$poll_id = SENRYU_QID;
 if ($_POST) {
   $columns = ['senryu', 'episode', 'name', 'age', 'gender'];
   $cnt = count($_POST['polla_aid']);
@@ -36,7 +36,7 @@ if ($_POST) {
     if ($edit_poll_question) {
       echo 'id: ' . $aid . ' を更新しました<br>';
     } else {
-      echo 'id: ' . $aid . ' は変化が無かったため更新しませんでした<br>';
+      echo 'id: ' . $aid . ' は変更が無かったため更新しませんでした<br>';
     }
   }
 }

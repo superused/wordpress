@@ -53,7 +53,8 @@ function poll_menu() {
 
 	add_submenu_page( 'wp-polls/polls-manager.php', __( 'Manage Polls', 'wp-polls'), __( 'Manage Polls', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-manager.php' );
 	add_submenu_page( 'wp-polls/polls-manager.php', __( 'Add Poll', 'wp-polls'), __( 'Add Poll', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-add.php' );
-	add_submenu_page( 'wp-polls/polls-manager.php', __( '川柳', 'wp-polls'), __( '川柳', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-senryu.php' );
+	add_submenu_page( 'wp-polls/polls-manager.php', __( '川柳_編集', 'wp-polls'), __( '川柳_編集', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-senryu.php' );
+	add_submenu_page( 'wp-polls/polls-manager.php', __( '川柳_新規追加', 'wp-polls'), __( '川柳_新規追加', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-senryu-add.php' );
 	add_submenu_page( 'wp-polls/polls-manager.php', __( 'Poll Options', 'wp-polls'), __( 'Poll Options', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-options.php' );
 	add_submenu_page( 'wp-polls/polls-manager.php', __( 'Poll Templates', 'wp-polls'), __( 'Poll Templates', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-templates.php' );
 }
@@ -219,7 +220,7 @@ function poll_scripts() {
 ### Function: Enqueue Polls Stylesheets/JavaScripts In WP-Admin
 add_action('admin_enqueue_scripts', 'poll_scripts_admin');
 function poll_scripts_admin($hook_suffix) {
-	$poll_admin_pages = array('wp-polls/polls-manager.php', 'wp-polls/polls-add.php', 'wp-polls/polls-options.php', 'wp-polls/polls-templates.php', 'wp-polls/polls-uninstall.php');
+	$poll_admin_pages = array('wp-polls/polls-manager.php', 'wp-polls/polls-add.php', 'wp-polls/polls-senryu-add.php', 'wp-polls/polls-options.php', 'wp-polls/polls-templates.php', 'wp-polls/polls-uninstall.php');
 	if(in_array($hook_suffix, $poll_admin_pages, true)) {
 		wp_enqueue_style('wp-polls-admin', plugins_url('wp-polls/polls-admin-css.css'), false, WP_POLLS_VERSION, 'all');
 		wp_enqueue_script('wp-polls-admin', plugins_url('wp-polls/polls-admin-js.js'), array('jquery'), WP_POLLS_VERSION, true);
@@ -1849,6 +1850,8 @@ function polls_activate() {
 							  "polla_qid int(10) NOT NULL default '0'," .
 							  "polla_answers varchar(200) character set utf8 NOT NULL default ''," .
 							  "polla_votes int(10) NOT NULL default '0'," .
+							  "polla_datas text default NULL," .
+							  "polla_type text default NULL," .
 							  "PRIMARY KEY  (polla_aid)" .
 							  ") $charset_collate;";
 	$create_table['pollsip'] = "CREATE TABLE $wpdb->pollsip (" .

@@ -3,7 +3,8 @@
 if(!current_user_can('manage_polls')) {
     die('Access Denied');
 }
-$poll_id = SENRYU_QID;
+$senryuData = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_type = 'senryu' order by polla_aid desc limit 1;"));
+$poll_id = $senryuData[0]->polla_qid;
 if ($_POST) {
   $columns = ['senryu', 'episode', 'name', 'age', 'gender'];
   $cnt = count($_POST['polla_aid']);

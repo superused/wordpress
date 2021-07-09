@@ -15,7 +15,18 @@ function add_poll_answer_add_senryu() {
   var id = parseInt(tr.attr('id').split('-').pop()) + 1;
   var $this = jQuery('<tr id="poll-answer-' + id + '">').append(tr.html()).appendTo('#poll_answers');
   $this.find('th').html(tr.find('th').text().split(' ').shift() + ' ' + id);
+  $this.find('input[type=button]').attr('onclick', 'remove_poll_answer_add(' + id + ')');
 }
+// enterでのsubmit起動防止
+jQuery(function() {
+  jQuery("input").keydown(function(e) {
+    if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
+      return false;
+    } else {
+      return true;
+    }
+  });
+})
 function remove_poll_answer_add(a){jQuery(document).ready(function(c){c("#poll-answer-"+a).remove();reorder_answer_num()})}
 function add_poll_answer_edit(){jQuery(document).ready(function(a){a("#poll_answers").append('<tr id="poll-answer-new-'+count_poll_answer_new+'"><th width="20%" scope="row" valign="top"></th><td width="60%"><input type="text" size="50" maxlength="200" name="polla_answers_new[]" />&nbsp;&nbsp;&nbsp;<input type="button" value="'+pollsAdminL10n.text_remove_poll_answer+'" onclick="remove_poll_answer_edit('+count_poll_answer_new+');" class="button" /></td><td width="20%" align="'+pollsAdminL10n.text_direction+
 	'">0 <input type="text" size="4" name="polla_answers_new_votes[]" value="0" onblur="check_totalvotes();" /></td></tr>');count_poll_answer_new++;reorder_answer_num()})}function remove_poll_answer_edit(a){jQuery(document).ready(function(c){c("#poll-answer-new-"+a).remove();check_totalvotes();reorder_answer_num()})}

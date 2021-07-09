@@ -3,31 +3,69 @@
 if(!current_user_can('manage_polls')) {
     die('Access Denied');
 }
-$senryuData = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_type = 'senryu' order by polla_aid desc limit 1;"));
+$senryuData = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_type = 'senryu' order by polla_aid desc;"));
+if (!$senryuData) {
+  echo 'error';exit;
+}
+$poll_aids = array_map(function($s) {
+  return $s->polla_aid;
+}, $senryuData);
 $poll_id = $senryuData[0]->polla_qid;
+
 if ($_POST) {
+  $deleteDatas = array_filter($poll_aids, function($s) {
+    return !in_array($s, $_POST['polla_aid']);
+  });
   $columns = ['senryu', 'episode', 'name', 'age', 'gender'];
   $cnt = count($_POST['polla_aid']);
   $updateDatas = [];
+  $insertDatas = [];
   for ($i = 0; $i < $cnt; $i++) {
     $aid = $_POST['polla_aid'][$i];
     $json = [];
     foreach ($columns as $column) {
       $json[$column] = $_POST[$column][$i];
     }
-    $updateDatas[$aid] = json_encode($json, true);
+    if ($aid == 'new') {
+      $insertDatas[] = [
+        'polla_qid' => $poll_id,
+        'polla_answers' => $json['name'],
+        'polla_datas' => json_encode($json, true),
+        'polla_type' => 'senryu',
+      ];
+    } else {
+      $updateDatas[$aid] = json_encode($json, true);
+    }
   }
 
+  foreach ($deleteDatas as $deleteData) {
+    $delete_poll_question = $wpdb->delete(
+      $wpdb->pollsa,
+      [
+        'polla_aid' => $deleteData,
+      ],
+      [
+        '%d',
+      ]
+    );
+    if ($delete_poll_question) {
+      echo 'id: ' . $deleteData . ' を削除しました<br>';
+    } else {
+      echo 'id: ' . $deleteData . ' の削除に失敗しました<br>';
+    }
+  }
   foreach ($updateDatas as $aid => $updateData) {
     $edit_poll_question = $wpdb->update(
       $wpdb->pollsa,
       [
+        'polla_datas' => esc_html($_POST['name']),
         'polla_datas' => $updateData,
       ],
       [
         'polla_aid' => $aid
       ],
       [
+        '%s',
         '%s',
       ],
       [
@@ -38,6 +76,23 @@ if ($_POST) {
       echo 'id: ' . $aid . ' を更新しました<br>';
     } else {
       echo 'id: ' . $aid . ' は変更が無かったため更新しませんでした<br>';
+    }
+  }
+  foreach ($insertDatas as $insertData) {
+    $add_poll_question = $wpdb->insert(
+      $wpdb->pollsa,
+      $insertData,
+      [
+        '%d',
+        '%s',
+        '%s',
+        '%s',
+      ]
+    );
+    if ($add_poll_question) {
+      echo '1件追加しました<br>';
+    } else {
+      echo '1件追加に失敗しました<br>';
     }
   }
 }
@@ -72,25 +127,24 @@ if ($_POST) {
             <!-- Poll Question -->
             <h3><?php echo esc_attr( $poll_question_text ); ?></h3>
             <!-- Poll Answers -->
-            <table class="form-table" border="1" style="border: 2px solid #dddddd; padding: 3px; margin: 0">
+            <table id="senryu-manage" class="form-table" border="1" style="border: 2px solid #dddddd; padding: 3px; margin: 0">
                 <thead>
                     <tr>
-                        <th scope="row" valign="top">投票名</th>
-                        <th scope="row" valign="top">川柳(半角| で五七五区切って下さい)</th>
-                        <th scope="row" valign="top">エピソード</th>
                         <th scope="row" valign="top">名前</th>
+                        <th scope="row" valign="top">川柳<br>この様な|形で入れて|下さいね</th>
+                        <th scope="row" valign="top">エピソード</th>
                         <th scope="row" valign="top">年齢</th>
                     </tr>
                 </thead>
                 <tbody id="poll_answers">
 <?php foreach($poll_answers as $poll_answer): ?>
 <tr>
-                  <td><?= esc_attr($poll_answer->polla_answers); ?>
-                  <input type="hidden" name="polla_aid[]" value="<?= esc_attr($poll_answer->polla_aid); ?>"</td>
-</td>
+                  <td>
+                    <input type="hidden" name="polla_aid[]" value="<?= esc_attr($poll_answer->polla_aid); ?>">
+                    <input type="text" name="name[]" value="<?= esc_attr($poll_answer->polla_datas['name']); ?>">
+                  </td>
                   <td><input type="text" name="senryu[]" value="<?= esc_attr($poll_answer->polla_datas['senryu']); ?>"</td>
-                  <td><input type="text" name="episode[]" value="<?= esc_attr($poll_answer->polla_datas['episode']); ?>"</td>
-                  <td><input type="text" name="name[]" value="<?= esc_attr($poll_answer->polla_datas['name']); ?>"</td>
+                  <td><textarea name="episode[]"><?= esc_attr($poll_answer->polla_datas['episode']); ?></textarea></td>
                   <td><input type="text" name="age[]" value="<?= esc_attr($poll_answer->polla_datas['age']); ?>"</td>
                   <td>
                       <select name="gender[]">
@@ -99,10 +153,14 @@ if ($_POST) {
                         <option value="2" <?= $poll_answer->polla_datas['gender'] == 2 ? ' selected' : '' ?>>女性</option>
                       </select>
                   </td>
+                  <td>
+                    <button class="senryu_remove" class="button" onclick="javascript:void(0);" style="white-space:nowrap">削除</button>
+                  </td>
 </tr>
 <?php endforeach; ?>
                 </tbody>
             </table>
+            <button id="senryu_add" class="button" onclick="javascript:void(0);">行を追加</button>
             <p style="text-align: center;">
                 <input type="submit" name="do" value="<?php _e('Edit Poll', 'wp-polls'); ?>" class="button-primary" />&nbsp;&nbsp;
                 <input type="button" name="cancel" value="<?php _e('Cancel', 'wp-polls'); ?>" class="button" onclick="javascript:history.go(-1)" />

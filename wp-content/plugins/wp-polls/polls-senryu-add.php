@@ -163,7 +163,7 @@ $count = 0;
 	<table class="form-table">
 		<tr>
 			<th width="20%" scope="row" valign="top"><?php _e('Question', 'wp-polls') ?></th>
-			<td width="80%"><input type="text" size="70" name="pollq_question" value="" /></td>
+			<td width="80%"><input type="text" size="70" name="pollq_question" value="川柳の投票" /></td>
 		</tr>
 	</table>
 	<!-- Poll Answers -->

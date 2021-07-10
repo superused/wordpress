@@ -10,7 +10,7 @@ function reorder_answer_num(){jQuery(document).ready(function(a){var c=a("#pollq
 function check_totalvotes(){temp_vote_count=0;jQuery(document).ready(function(a){a("#poll_answers tr td input[size=4]").each(function(c){temp_vote_count=isNaN(a(this).val())?temp_vote_count+0:temp_vote_count+parseInt(a(this).val())});a("#pollq_totalvotes").val(temp_vote_count)})}
 function add_poll_answer_add(){jQuery(document).ready(function(a){a("#poll_answers").append('<tr id="poll-answer-'+count_poll_answer+'"><th width="20%" scope="row" valign="top"></th><td width="80%"><input type="text" size="50" maxlength="200" name="polla_answers[]" />&nbsp;&nbsp;&nbsp;<input type="button" value="'+pollsAdminL10n.text_remove_poll_answer+'" onclick="remove_poll_answer_add('+count_poll_answer+');" class="button" /></td></tr>');count_poll_answer++;reorder_answer_num()})}
 
-function add_poll_answer_add_senryu() {
+function add_poll_answer_db() {
   var tr = jQuery('.form-table').eq(1).find('tr').last();
   var id = parseInt(tr.attr('id').split('-').pop()) + 1;
   var $this = jQuery('<tr id="poll-answer-' + id + '">').append(tr.html()).appendTo('#poll_answers');
@@ -34,16 +34,16 @@ function check_pollq_multiple(){jQuery(document).ready(function(a){1==parseInt(a
 function check_pollexpiry(){jQuery(document).ready(function(a){a("#pollq_expiry_no").is(":checked")?a("#pollq_expiry").hide():a("#pollq_expiry").show()})};
 jQuery(function() {
   const $ = jQuery;
-  $("#senryu_add").click(function(e) {
-    var clone = $('#senryu-manage').find('tr').last().clone();
-    $('#senryu-manage').append(clone);
+  $("#manage_polls_add").click(function(e) {
+    var clone = $('#add_poll_manage').find('tr').last().clone();
+    $('#add_poll_manage').append(clone);
     clone.find('input,textarea,select').each(function() {
       $(this).val('');
     });
     clone.find('input[type=hidden]').attr('value', 'new');
     return false;
   });
-  $(".senryu_remove").click(function(e) {
+  $(".add_poll_remove").click(function(e) {
     $(this).closest('tr').remove();
   });
 });

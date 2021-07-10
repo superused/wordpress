@@ -3,20 +3,20 @@
 if(!current_user_can('manage_polls')) {
     die('Access Denied');
 }
-$senryuData = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_type = 'senryu' order by polla_aid desc;"));
-if (!$senryuData) {
+$photoData = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_type = 'photo' order by polla_aid desc;"));
+if (!$photoData) {
   echo 'error';exit;
 }
 $poll_aids = array_map(function($s) {
   return $s->polla_aid;
-}, $senryuData);
-$poll_id = $senryuData[0]->polla_qid;
+}, $photoData);
+$poll_id = $photoData[0]->polla_qid;
 
 if ($_POST) {
   $deleteDatas = array_filter($poll_aids, function($s) {
     return !in_array($s, $_POST['polla_aid']);
   });
-  $columns = ['senryu', 'episode', 'name', 'age', 'gender'];
+  $columns = ['photo', 'episode', 'name', 'title', 'address', 'location'];
   $cnt = count($_POST['polla_aid']);
   $updateDatas = [];
   $insertDatas = [];
@@ -31,7 +31,7 @@ if ($_POST) {
         'polla_qid' => $poll_id,
         'polla_answers' => $json['name'],
         'polla_datas' => json_encode($json, true),
-        'polla_type' => 'senryu',
+        'polla_type' => 'photo',
       ];
     } else {
       $updateDatas[$aid] = json_encode($json, true);
@@ -123,17 +123,19 @@ if ($_POST) {
         <input type="hidden" name="pollq_active" value="<?php echo $poll_active; ?>" />
         <input type="hidden" name="poll_timestamp_old" value="<?php echo $poll_timestamp; ?>" />
         <div class="wrap">
-            <h2><?php _e('川柳編集', 'wp-polls'); ?></h2>
+            <h2><?php _e('写真編集', 'wp-polls'); ?></h2>
             <!-- Poll Question -->
             <h3><?php echo esc_attr( $poll_question_text ); ?></h3>
             <!-- Poll Answers -->
-            <table id="add_poll_manage" class="form-table" border="1" style="border: 2px solid #dddddd; padding: 3px; margin: 0">
+            <table id="photo-manage" class="form-table" border="1" style="border: 2px solid #dddddd; padding: 3px; margin: 0">
                 <thead>
                     <tr>
-                        <th scope="row" valign="top">名前</th>
-                        <th scope="row" valign="top">川柳<br>この様な|形で入れて|下さいね</th>
+                        <th scope="row" valign="top">作者</th>
+                        <th scope="row" valign="top">タイトル</th>
+                        <th scope="row" valign="top">写真URL</th>
+                        <th scope="row" valign="top">撮影場所</th>
+                        <th scope="row" valign="top">在住</th>
                         <th scope="row" valign="top">エピソード</th>
-                        <th scope="row" valign="top">年齢</th>
                     </tr>
                 </thead>
                 <tbody id="poll_answers">
@@ -143,16 +145,11 @@ if ($_POST) {
                     <input type="hidden" name="polla_aid[]" value="<?= esc_attr($poll_answer->polla_aid); ?>">
                     <input type="text" name="name[]" value="<?= esc_attr($poll_answer->polla_datas['name']); ?>">
                   </td>
-                  <td><input type="text" name="senryu[]" value="<?= esc_attr($poll_answer->polla_datas['senryu']); ?>"</td>
+                  <td><input type="text" name="title[]" value="<?= esc_attr($poll_answer->polla_datas['title']); ?>"</td>
+                  <td><input type="text" name="photo[]" value="<?= esc_attr($poll_answer->polla_datas['photo']); ?>"</td>
+                  <td><input type="text" name="location[]" value="<?= esc_attr($poll_answer->polla_datas['location']); ?>"</td>
+                  <td><input type="text" name="address[]" value="<?= esc_attr($poll_answer->polla_datas['address']); ?>"</td>
                   <td><textarea name="episode[]"><?= esc_attr($poll_answer->polla_datas['episode']); ?></textarea></td>
-                  <td><input type="text" name="age[]" value="<?= esc_attr($poll_answer->polla_datas['age']); ?>"</td>
-                  <td>
-                      <select name="gender[]">
-                        <option value="">選択</option>
-                        <option value="1" <?= $poll_answer->polla_datas['gender'] == 1 ? ' selected' : '' ?>>男性</option>
-                        <option value="2" <?= $poll_answer->polla_datas['gender'] == 2 ? ' selected' : '' ?>>女性</option>
-                      </select>
-                  </td>
                   <td>
                     <button class="add_poll_remove" class="button" onclick="javascript:void(0);" style="white-space:nowrap">削除</button>
                   </td>

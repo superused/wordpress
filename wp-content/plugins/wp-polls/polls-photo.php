@@ -16,7 +16,7 @@ if ($_POST) {
   $deleteDatas = array_filter($poll_aids, function($s) {
     return !in_array($s, $_POST['polla_aid']);
   });
-  $columns = ['photo', 'episode', 'name', 'title', 'address', 'location'];
+  $columns = ['photo', 'episode', 'name', 'title', 'address', 'location', 'comment'];
   $cnt = count($_POST['polla_aid']);
   $updateDatas = [];
   $insertDatas = [];
@@ -127,7 +127,7 @@ if ($_POST) {
             <!-- Poll Question -->
             <h3><?php echo esc_attr( $poll_question_text ); ?></h3>
             <!-- Poll Answers -->
-            <table id="photo-manage" class="form-table" border="1" style="border: 2px solid #dddddd; padding: 3px; margin: 0">
+            <table id="add_poll_manage" class="form-table" border="1" style="border: 2px solid #dddddd; padding: 3px; margin: 0">
                 <thead>
                     <tr>
                         <th scope="row" valign="top">作者</th>
@@ -136,6 +136,7 @@ if ($_POST) {
                         <th scope="row" valign="top">撮影場所</th>
                         <th scope="row" valign="top">在住</th>
                         <th scope="row" valign="top">エピソード</th>
+                        <th scope="row" valign="top">コメント</th>
                     </tr>
                 </thead>
                 <tbody id="poll_answers">
@@ -150,6 +151,7 @@ if ($_POST) {
                   <td><input type="text" name="location[]" value="<?= esc_attr($poll_answer->polla_datas['location']); ?>"</td>
                   <td><input type="text" name="address[]" value="<?= esc_attr($poll_answer->polla_datas['address']); ?>"</td>
                   <td><textarea name="episode[]"><?= esc_attr($poll_answer->polla_datas['episode']); ?></textarea></td>
+                  <td><textarea name="comment[]"><?= esc_attr($poll_answer->polla_datas['comment']); ?></textarea></td>
                   <td>
                     <button class="add_poll_remove" class="button" onclick="javascript:void(0);" style="white-space:nowrap">削除</button>
                   </td>

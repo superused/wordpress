@@ -86,7 +86,7 @@ if ( ! empty($_POST['do'] ) ) {
 				$polla_answers = isset( $_POST['polla_answers'] ) ? $_POST['polla_answers'] : array();
 				$polla_qid = (int) $wpdb->insert_id;
 				/* shimojo add start */
-				$columns = ['photo', 'episode', 'polla_answers', 'title', 'address', 'location'];
+				$columns = ['photo', 'episode', 'polla_answers', 'title', 'address', 'location', 'comment'];
 				$cnt = count($_POST['photo']);
 				$updateDatas = [];
 				for ($i = 0; $i < $cnt; $i++) {
@@ -184,6 +184,7 @@ $count = 0;
 				<td style="width:70px;padding:15px 5px;">撮影場所</td>
 				<td style="width:70px;padding:15px 5px;">在住</td>
 				<td style="width:300px;padding:15px 5px;">エピソード</td>
+				<td style="width:300px;padding:15px 5px;">コメント</td>
 			</tr>
 <?php for($i = 1; $i <= $poll_noquestion; $i++) { ?>
 			<tr id="poll-answer-<?= $i;?>">
@@ -194,6 +195,7 @@ $count = 0;
 				<td style="width:100px;padding:15px 5px;"><input type="text" placeholder="撮影場所" size="50" style="width:100%;" maxlength="200" name="location[]" />
 				<td style="width:100px;padding:15px 5px;"><input type="text" placeholder="在住" size="50" style="width:100%;" maxlength="200" name="address[]" />
 				<td style="width:300px;padding:15px 5px;"><textarea placeholder="エピソード" size="50" style="width:100%;" maxlength="200" name="episode[]"></textarea>
+				<td style="width:300px;padding:15px 5px;"><textarea placeholder="コメント" size="50" style="width:100%;" maxlength="200" name="comment[]"></textarea>
 				<td style="width:150px;padding:15px 5px;"><input type="button" value="<?= __('Remove', 'wp-polls'); ?>" onclick="remove_poll_answer_add(<?=$i;?>);" class="button" /></td>
 			</tr>
 <?php

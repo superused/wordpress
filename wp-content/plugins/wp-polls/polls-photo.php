@@ -3,7 +3,8 @@
 if(!current_user_can('manage_polls')) {
     die('Access Denied');
 }
-$photoData = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_type = 'photo' order by polla_aid desc;"));
+// $photoData = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_type = 'photo' order by polla_aid desc;"));
+$photoData = $wpdb->get_results($wpdb->prepare("SELECT * from $wpdb->pollsa a inner join $wpdb->pollsq q on q.pollq_id = a.polla_qid where polla_type = 'photo' and pollq_active = 1;"));
 if (!$photoData) {
   echo 'error';exit;
 }
@@ -16,7 +17,7 @@ if ($_POST) {
   $deleteDatas = array_filter($poll_aids, function($s) {
     return !in_array($s, $_POST['polla_aid']);
   });
-  $columns = ['photo', 'episode', 'name', 'title', 'address', 'location', 'comment'];
+  $columns = ['photo', 'episode', 'name', 'title'];
   $cnt = count($_POST['polla_aid']);
   $updateDatas = [];
   $insertDatas = [];
@@ -99,7 +100,8 @@ if ($_POST) {
 
         $last_col_align = is_rtl() ? 'right' : 'left';
         $poll_question = $wpdb->get_row( $wpdb->prepare( "SELECT pollq_question, pollq_timestamp, pollq_totalvotes, pollq_active, pollq_expiry, pollq_multiple, pollq_totalvoters FROM $wpdb->pollsq WHERE pollq_id = %d", $poll_id ) );
-        $poll_answers = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_qid = %d ORDER BY polla_aid ASC", $poll_id ) );
+        // $poll_answers = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_qid = %d ORDER BY polla_aid ASC", $poll_id ) );
+        $poll_answers = $photoData;
         foreach ($poll_answers as $key => $poll_answer) {
           if (isset($poll_answer->polla_datas)) {
             $poll_answers[$key]->polla_datas = json_decode($poll_answer->polla_datas, true);
@@ -133,10 +135,7 @@ if ($_POST) {
                         <th scope="row" valign="top">作者</th>
                         <th scope="row" valign="top">タイトル</th>
                         <th scope="row" valign="top">写真URL</th>
-                        <th scope="row" valign="top">撮影場所</th>
-                        <th scope="row" valign="top">在住</th>
                         <th scope="row" valign="top">エピソード</th>
-                        <th scope="row" valign="top">コメント</th>
                     </tr>
                 </thead>
                 <tbody id="poll_answers">
@@ -148,10 +147,7 @@ if ($_POST) {
                   </td>
                   <td><input type="text" name="title[]" value="<?= esc_attr($poll_answer->polla_datas['title']); ?>"</td>
                   <td><input type="text" name="photo[]" value="<?= esc_attr($poll_answer->polla_datas['photo']); ?>"</td>
-                  <td><input type="text" name="location[]" value="<?= esc_attr($poll_answer->polla_datas['location']); ?>"</td>
-                  <td><input type="text" name="address[]" value="<?= esc_attr($poll_answer->polla_datas['address']); ?>"</td>
                   <td><textarea name="episode[]"><?= esc_attr($poll_answer->polla_datas['episode']); ?></textarea></td>
-                  <td><textarea name="comment[]"><?= esc_attr($poll_answer->polla_datas['comment']); ?></textarea></td>
                   <td>
                     <button class="add_poll_remove" class="button" onclick="javascript:void(0);" style="white-space:nowrap">削除</button>
                   </td>

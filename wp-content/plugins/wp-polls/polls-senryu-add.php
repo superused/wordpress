@@ -60,7 +60,7 @@ if ( ! empty($_POST['do'] ) ) {
 				// Add Poll Answers
 				$polla_answers = isset( $_POST['polla_answers'] ) ? $_POST['polla_answers'] : array();
 				/* shimojo add start */
-				$columns = ['senryu', 'episode', 'polla_answers', 'age', 'gender'];
+				$columns = ['senryu', 'episode', 'polla_answers', 'personal'];
 				$cnt = count($_POST['senryu']);
 				$updateDatas = [];
 				for ($i = 0; $i < $cnt; $i++) {
@@ -181,17 +181,15 @@ $count = 0;
 				<td style="width:80px;padding:15px 5px;">作者</td>
 				<td style="width:300px;padding:15px 5px;">川柳<br>この様な|形で入れて|下さいね</td>
 				<td style="width:300px;padding:15px 5px;">エピソード</td>
-				<td style="width:70px;padding:15px 5px;">年齢</td>
-				<td style="width:150px;padding:15px 5px;">性別</td>
+				<td style="width:70px;padding:15px 5px;">性別/年代</td>
 			</tr>
 <?php for($i = 1; $i <= $poll_noquestion; $i++) { ?>
 			<tr id="poll-answer-<?= $i;?>">
 				<th style="width:50px;padding:30px 0;margin:0;" scope="row" valign="top"><?= sprintf(__('Answer %s', 'wp-polls'), number_format_i18n($i)); ?></th>
-				<td style="width:80px;padding:15px 5px;"><input type="text" placeholder="作者の名前" size="50" style="width:100%;" maxlength="200" name="polla_answers[]" />
-				<td style="width:300px;padding:15px 5px;"><input type="text" placeholder="川柳" size="50" style="width:100%;" maxlength="200" name="senryu[]" />
-				<td style="width:300px;padding:15px 5px;"><textarea placeholder="エピソード" size="50" style="width:100%;" maxlength="200" name="episode[]"></textarea>
-				<td style="width:70px;padding:15px 5px;"><input type="number" placeholder="年齢" size="50" style="width:100%;" maxlength="200" name="age[]" />
-				<td style="width:150px;padding:15px 5px;"><select name="gender[]"><option value="">選択</option><option value="1">男性</option><option value="2">女性</option></select>&nbsp;<input type="button" value="<?= __('Remove', 'wp-polls'); ?>" onclick="remove_poll_answer_add(<?=$i;?>);" class="button" /></td>
+				<td style="width:80px;padding:15px 5px;"><input type="text" placeholder="作者の名前" size="50" style="width:100%;" maxlength="200" name="polla_answers[]" /></td>
+				<td style="width:300px;padding:15px 5px;"><input type="text" placeholder="川柳" size="50" style="width:100%;" maxlength="200" name="senryu[]" /></td>
+				<td style="width:300px;padding:15px 5px;"><textarea placeholder="エピソード" size="50" style="width:100%;" maxlength="200" name="episode[]"></textarea></td>
+				<td style="width:80px;padding:15px 5px;"><input type="text" placeholder="性別/年代" size="50" style="width:100%;" maxlength="200" name="personal[]" />&nbsp;<input type="button" value="<?= __('Remove', 'wp-polls'); ?>" onclick="remove_poll_answer_add(<?=$i;?>);" class="button" /></td>
 			</tr>
 <?php
 				$count++;

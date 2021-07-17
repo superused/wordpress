@@ -3,7 +3,8 @@
 if(!current_user_can('manage_polls')) {
     die('Access Denied');
 }
-$senryuData = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_type = 'senryu' order by polla_aid desc;"));
+// $senryuData = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_type = 'senryu' order by polla_aid desc;"));
+$senryuData = $wpdb->get_results($wpdb->prepare("SELECT * from $wpdb->pollsa a inner join $wpdb->pollsq q on q.pollq_id = a.polla_qid where polla_type = 'senryu' and pollq_active = 1;"));
 if (!$senryuData) {
   echo 'error';exit;
 }
@@ -16,7 +17,7 @@ if ($_POST) {
   $deleteDatas = array_filter($poll_aids, function($s) {
     return !in_array($s, $_POST['polla_aid']);
   });
-  $columns = ['senryu', 'episode', 'name', 'age', 'gender'];
+  $columns = ['senryu', 'episode', 'name', 'personal'];
   $cnt = count($_POST['polla_aid']);
   $updateDatas = [];
   $insertDatas = [];
@@ -99,7 +100,8 @@ if ($_POST) {
 
         $last_col_align = is_rtl() ? 'right' : 'left';
         $poll_question = $wpdb->get_row( $wpdb->prepare( "SELECT pollq_question, pollq_timestamp, pollq_totalvotes, pollq_active, pollq_expiry, pollq_multiple, pollq_totalvoters FROM $wpdb->pollsq WHERE pollq_id = %d", $poll_id ) );
-        $poll_answers = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_qid = %d ORDER BY polla_aid ASC", $poll_id ) );
+        // $poll_answers = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->pollsa WHERE polla_qid = %d ORDER BY polla_aid ASC", $poll_id ) );
+        $poll_answers = $senryuData;
         foreach ($poll_answers as $key => $poll_answer) {
           if (isset($poll_answer->polla_datas)) {
             $poll_answers[$key]->polla_datas = json_decode($poll_answer->polla_datas, true);
@@ -133,7 +135,7 @@ if ($_POST) {
                         <th scope="row" valign="top">名前</th>
                         <th scope="row" valign="top">川柳<br>この様な|形で入れて|下さいね</th>
                         <th scope="row" valign="top">エピソード</th>
-                        <th scope="row" valign="top">年齢</th>
+                        <th scope="row" valign="top">性別/年代</th>
                     </tr>
                 </thead>
                 <tbody id="poll_answers">
@@ -145,14 +147,7 @@ if ($_POST) {
                   </td>
                   <td><input type="text" name="senryu[]" value="<?= esc_attr($poll_answer->polla_datas['senryu']); ?>"</td>
                   <td><textarea name="episode[]"><?= esc_attr($poll_answer->polla_datas['episode']); ?></textarea></td>
-                  <td><input type="text" name="age[]" value="<?= esc_attr($poll_answer->polla_datas['age']); ?>"</td>
-                  <td>
-                      <select name="gender[]">
-                        <option value="">選択</option>
-                        <option value="1" <?= $poll_answer->polla_datas['gender'] == 1 ? ' selected' : '' ?>>男性</option>
-                        <option value="2" <?= $poll_answer->polla_datas['gender'] == 2 ? ' selected' : '' ?>>女性</option>
-                      </select>
-                  </td>
+                  <td><input type="text" name="personal[]" value="<?= esc_attr($poll_answer->polla_datas['personal']); ?>"></td>
                   <td>
                     <button class="add_poll_remove" class="button" onclick="javascript:void(0);" style="white-space:nowrap">削除</button>
                   </td>

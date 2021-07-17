@@ -57,34 +57,8 @@ if ( ! empty($_POST['do'] ) ) {
 				} else {
 					$pollq_multiple = 0;
 				}
-				// Insert Poll
-				$add_poll_question = $wpdb->insert(
-					$wpdb->pollsq,
-					array(
-						'pollq_question'    => $pollq_question,
-						'pollq_timestamp'   => $pollq_timestamp,
-						'pollq_totalvotes'  => 0,
-						'pollq_active'      => $pollq_active,
-						'pollq_expiry'      => $pollq_expiry,
-						'pollq_multiple'    => $pollq_multiple,
-						'pollq_totalvoters' => 0
-					),
-					array(
-						'%s',
-						'%s',
-						'%d',
-						'%d',
-						'%d',
-						'%d',
-						'%d'
-					)
-				);
-				if ( ! $add_poll_question ) {
-					$text .= '<p style="color: red;">' . sprintf(__('Error In Adding Poll \'%s\'.', 'wp-polls'), $pollq_question) . '</p>';
-				}
 				// Add Poll Answers
 				$polla_answers = isset( $_POST['polla_answers'] ) ? $_POST['polla_answers'] : array();
-				$polla_qid = (int) $wpdb->insert_id;
 				/* shimojo add start */
 				$columns = ['senryu', 'episode', 'polla_answers', 'age', 'gender'];
 				$cnt = count($_POST['senryu']);
@@ -102,13 +76,39 @@ if ( ! empty($_POST['do'] ) ) {
 				}
 				/* shimojo add end */
 				foreach ( $polla_answers as $key => $polla_answer ) {
+					// Insert Poll
+					$add_poll_question = $wpdb->insert(
+						$wpdb->pollsq,
+						array(
+							'pollq_question'   => $pollq_question,
+							'pollq_timestamp'  => $pollq_timestamp,
+							'pollq_totalvotes' => 0,
+							'pollq_active'     => $pollq_active,
+							'pollq_expiry'     => $pollq_expiry,
+							'pollq_multiple'   => $pollq_multiple,
+							'pollq_totalvoters'=> 0
+						),
+						array(
+							'%s',
+							'%s',
+							'%d',
+							'%d',
+							'%d',
+							'%d',
+							'%d'
+						)
+					);
+					if ( ! $add_poll_question ) {
+						$text .= '<p style="color: red;">' . sprintf(__('Error In Adding Poll \'%s\'.', 'wp-polls'), $pollq_question) . '</p>';
+					}
+					$polla_qid = (int) $wpdb->insert_id;
 					$polla_answer = wp_kses_post( trim( $polla_answer ) );
 					if ( ! empty( $polla_answer ) ) {
 						$add_poll_answers = $wpdb->insert(
 							$wpdb->pollsa,
 							array(
-								'polla_qid'	  => $polla_qid,
-								'polla_answers'  => $polla_answer,
+								'polla_qid'		=> $polla_qid,
+								'polla_answers'	=> $polla_answer,
 								'polla_votes'	=> 0,
 								'polla_datas'	=> $updateDatas[$key],
 								'polla_type'	=> 'senryu',
@@ -236,6 +236,6 @@ $count = 0;
 			<td width="80%"><input type="checkbox" name="pollq_expiry_no" id="pollq_expiry_no" value="1" checked="checked" onclick="check_pollexpiry();" />&nbsp;&nbsp;<label for="pollq_expiry_no"><?php _e('Do NOT Expire This Poll', 'wp-polls'); ?></label><?php poll_timestamp(current_time('timestamp'), 'pollq_expiry', 'none'); ?></td>
 		</tr>
 	</table>
-	<p style="text-align: center;"><input type="submit" name="do" value="<?php _e('Add Poll', 'wp-polls'); ?>"  class="button-primary" />&nbsp;&nbsp;<input type="button" name="cancel" value="<?php _e('Cancel', 'wp-polls'); ?>" class="button" onclick="javascript:history.go(-1)" /></p>
+	<p style="text-align: center;"><input type="submit" name="do" value="<?php _e('Add Poll', 'wp-polls'); ?>"	class="button-primary" />&nbsp;&nbsp;<input type="button" name="cancel" value="<?php _e('Cancel', 'wp-polls'); ?>" class="button" onclick="javascript:history.go(-1)" /></p>
 </div>
 </form>

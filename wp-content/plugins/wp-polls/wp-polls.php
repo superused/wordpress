@@ -1400,7 +1400,8 @@ function vote_poll_process($poll_id, $poll_aid_array = [])
 	if ( $poll_logging_method === 1 || $poll_logging_method === 3 ) {
 		$cookie_expiry = (int) get_option('poll_cookielog_expiry');
 		if ($cookie_expiry === 0) {
-			$cookie_expiry = YEAR_IN_SECONDS;
+			// $cookie_expiry = YEAR_IN_SECONDS;
+			$cookie_expiry = strtotime(date('Y-m-d', current_time('timestamp') + 86400)) - $pollip_timestamp;
 		}
 		setcookie( 'voted_' . $poll_id, implode(',', $poll_aid_array ), $pollip_timestamp + $cookie_expiry, apply_filters( 'wp_polls_cookiepath', SITECOOKIEPATH ) );
 	}

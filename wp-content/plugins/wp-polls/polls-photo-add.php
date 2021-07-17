@@ -57,34 +57,8 @@ if ( ! empty($_POST['do'] ) ) {
 				} else {
 					$pollq_multiple = 0;
 				}
-				// Insert Poll
-				$add_poll_question = $wpdb->insert(
-					$wpdb->pollsq,
-					array(
-						'pollq_question'    => $pollq_question,
-						'pollq_timestamp'   => $pollq_timestamp,
-						'pollq_totalvotes'  => 0,
-						'pollq_active'      => $pollq_active,
-						'pollq_expiry'      => $pollq_expiry,
-						'pollq_multiple'    => $pollq_multiple,
-						'pollq_totalvoters' => 0
-					),
-					array(
-						'%s',
-						'%s',
-						'%d',
-						'%d',
-						'%d',
-						'%d',
-						'%d'
-					)
-				);
-				if ( ! $add_poll_question ) {
-					$text .= '<p style="color: red;">' . sprintf(__('Error In Adding Poll \'%s\'.', 'wp-polls'), $pollq_question) . '</p>';
-				}
 				// Add Poll Answers
 				$polla_answers = isset( $_POST['polla_answers'] ) ? $_POST['polla_answers'] : array();
-				$polla_qid = (int) $wpdb->insert_id;
 				/* shimojo add start */
 				$columns = ['photo', 'episode', 'polla_answers', 'title', 'address', 'location', 'comment'];
 				$cnt = count($_POST['photo']);
@@ -102,6 +76,32 @@ if ( ! empty($_POST['do'] ) ) {
 				}
 				/* shimojo add end */
 				foreach ( $polla_answers as $key => $polla_answer ) {
+					// Insert Poll
+					$add_poll_question = $wpdb->insert(
+						$wpdb->pollsq,
+						array(
+							'pollq_question'    => $pollq_question,
+							'pollq_timestamp'   => $pollq_timestamp,
+							'pollq_totalvotes'  => 0,
+							'pollq_active'      => $pollq_active,
+							'pollq_expiry'      => $pollq_expiry,
+							'pollq_multiple'    => $pollq_multiple,
+							'pollq_totalvoters' => 0
+						),
+						array(
+							'%s',
+							'%s',
+							'%d',
+							'%d',
+							'%d',
+							'%d',
+							'%d'
+						)
+					);
+					if ( ! $add_poll_question ) {
+						$text .= '<p style="color: red;">' . sprintf(__('Error In Adding Poll \'%s\'.', 'wp-polls'), $pollq_question) . '</p>';
+					}
+					$polla_qid = (int) $wpdb->insert_id;
 					$polla_answer = wp_kses_post( trim( $polla_answer ) );
 					if ( ! empty( $polla_answer ) ) {
 						$add_poll_answers = $wpdb->insert(

@@ -83,6 +83,10 @@ $table_prefix = 'wp_';
  */
 define( 'WP_DEBUG', false );
 
+/* カスタム値は、この行と「編集が必要なのはここまでです」の行の間に追加してください。 */
+
+
+
 /* 編集が必要なのはここまでです ! WordPress でのパブリッシングをお楽しみください。 */
 
 /** Absolute path to the WordPress directory. */

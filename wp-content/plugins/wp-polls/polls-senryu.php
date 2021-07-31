@@ -17,7 +17,7 @@ if ($_POST) {
   $deleteDatas = array_filter($poll_aids, function($s) {
     return !in_array($s, $_POST['polla_aid']);
   });
-  $columns = ['senryu', 'episode', 'name', 'personal'];
+  $columns = ['senryu', 'episode', 'name', 'personal', 'image'];
   $cnt = count($_POST['polla_aid']);
   $updateDatas = [];
   $insertDatas = [];
@@ -136,6 +136,8 @@ if ($_POST) {
                         <th scope="row" valign="top">川柳<br>この様な|形で入れて|下さいね</th>
                         <th scope="row" valign="top">エピソード</th>
                         <th scope="row" valign="top">性別/年代</th>
+                        <th scope="row" valign="top">画像URL</th>
+                        <th scope="row" valign="top">削除</th>
                     </tr>
                 </thead>
                 <tbody id="poll_answers">
@@ -148,6 +150,7 @@ if ($_POST) {
                   <td><input type="text" name="senryu[]" value="<?= esc_attr($poll_answer->polla_datas['senryu']); ?>"</td>
                   <td><textarea name="episode[]"><?= esc_attr($poll_answer->polla_datas['episode']); ?></textarea></td>
                   <td><input type="text" name="personal[]" value="<?= esc_attr($poll_answer->polla_datas['personal']); ?>"></td>
+                  <td><input type="text" name="image[]" value="<?= $poll_answer->polla_datas['image']; ?>"></td>
                   <td>
                     <button class="add_poll_remove" class="button" onclick="javascript:void(0);" style="white-space:nowrap">削除</button>
                   </td>

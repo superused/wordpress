@@ -60,7 +60,7 @@ if ( ! empty($_POST['do'] ) ) {
 				// Add Poll Answers
 				$polla_answers = isset( $_POST['polla_answers'] ) ? $_POST['polla_answers'] : array();
 				/* shimojo add start */
-				$columns = ['senryu', 'episode', 'polla_answers', 'personal'];
+				$columns = ['senryu', 'episode', 'polla_answers', 'personal', 'image'];
 				$cnt = count($_POST['senryu']);
 				$updateDatas = [];
 				for ($i = 0; $i < $cnt; $i++) {
@@ -189,7 +189,8 @@ $count = 0;
 				<td style="width:80px;padding:15px 5px;"><input type="text" placeholder="作者の名前" size="50" style="width:100%;" maxlength="200" name="polla_answers[]" /></td>
 				<td style="width:300px;padding:15px 5px;"><input type="text" placeholder="川柳" size="50" style="width:100%;" maxlength="200" name="senryu[]" /></td>
 				<td style="width:300px;padding:15px 5px;"><textarea placeholder="エピソード" size="50" style="width:100%;" maxlength="200" name="episode[]"></textarea></td>
-				<td style="width:80px;padding:15px 5px;"><input type="text" placeholder="性別/年代" size="50" style="width:100%;" maxlength="200" name="personal[]" />&nbsp;<input type="button" value="<?= __('Remove', 'wp-polls'); ?>" onclick="remove_poll_answer_add(<?=$i;?>);" class="button" /></td>
+				<td style="width:80px;padding:15px 5px;"><input type="text" placeholder="性別/年代" size="50" style="width:100%;" maxlength="200" name="personal[]" /></td>
+				<td style="width:120px;padding:15px 5px;"><input type="text" placeholder="画像URL（ドメイン以降から）" size="50" style="width:100%;" maxlength="255" name="image[]" />&nbsp;<input type="button" value="<?= __('Remove', 'wp-polls'); ?>" onclick="remove_poll_answer_add(<?=$i;?>);" class="button" /></td>
 			</tr>
 <?php
 				$count++;

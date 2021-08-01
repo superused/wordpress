@@ -270,6 +270,7 @@ class wpdb {
 		'term_relationships',
 		'termmeta',
 		'commentmeta',
+		'live_details',
 	);
 
 	/**

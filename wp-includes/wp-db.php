@@ -271,6 +271,7 @@ class wpdb {
 		'termmeta',
 		'commentmeta',
 		'live_details',
+		'projects',
 	);
 
 	/**

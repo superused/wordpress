@@ -38,7 +38,7 @@ class Schema {
 	 *
 	 * @var array
 	 */
-	private $webPageGraphs = [
+	protected $webPageGraphs = [
 		'WebPage',
 		'AboutPage',
 		'CheckoutPage',
@@ -48,7 +48,6 @@ class Schema {
 		'ItemPage',
 		'MedicalWebPage',
 		'ProfilePage',
-		'QAPage',
 		'RealEstateListing',
 		'SearchResultsPage'
 	];
@@ -62,6 +61,21 @@ class Schema {
 	 */
 	public $nullableFields = [
 		'price' // Needs to be 0 if free for Software Application.
+	];
+
+
+	/**
+	 * List of mapped parents with properties that are allowed to contain a restricted set of HTML tags.
+	 *
+	 * @since 4.2.3
+	 *
+	 * @var array
+	 */
+	private $htmlAllowedFields = [
+		// FAQPage
+		'acceptedAnswer' => [
+			'text'
+		]
 	];
 
 	/**
@@ -104,6 +118,7 @@ class Schema {
 			}
 		}
 
+		$schema['@graph'] = apply_filters( 'aioseo_schema_output', $schema['@graph'] );
 		$schema['@graph'] = array_values( $this->cleanData( $schema['@graph'] ) );
 
 		return isset( $_GET['aioseo-dev'] ) ? wp_json_encode( $schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) : wp_json_encode( $schema );
@@ -126,15 +141,17 @@ class Schema {
 			'BreadcrumbList'
 		];
 
-		if ( is_front_page() ) {
-			$this->graphs[] = 'posts' === get_option( 'show_on_front' ) ? 'CollectionPage' : 'WebPage';
+		if ( is_front_page() && 'posts' === get_option( 'show_on_front' ) ) {
+			$this->graphs[] = 'CollectionPage';
 			$this->context  = $context->home();
+
 			return;
 		}
 
 		if ( is_home() || aioseo()->helpers->isWooCommerceShopPage() ) {
 			$this->graphs[] = 'CollectionPage';
 			$this->context  = $context->post();
+
 			return;
 		}
 
@@ -144,6 +161,7 @@ class Schema {
 			// Check if we're on a BuddyPress member page.
 			if ( function_exists( 'bp_is_user' ) && bp_is_user() ) {
 				array_push( $this->graphs, 'ProfilePage', 'PersonAuthor' );
+
 				return;
 			}
 
@@ -155,6 +173,7 @@ class Schema {
 			$postGraphs = $this->getPostGraphs( $post );
 			if ( is_array( $postGraphs ) ) {
 				$this->graphs = array_merge( $this->graphs, $postGraphs );
+
 				return;
 			}
 			$this->graphs[] = $postGraphs;
@@ -163,30 +182,35 @@ class Schema {
 		if ( is_category() || is_tag() || is_tax() ) {
 			$this->graphs[] = 'CollectionPage';
 			$this->context  = $context->term();
+
 			return;
 		}
 
 		if ( is_author() ) {
 			array_push( $this->graphs, 'CollectionPage', 'PersonAuthor' );
 			$this->context = $context->author();
+
 			return;
 		}
 
 		if ( is_post_type_archive() ) {
 			$this->graphs[] = 'CollectionPage';
 			$this->context  = $context->postArchive();
+
 			return;
 		}
 
 		if ( is_date() ) {
 			$this->graphs[] = 'CollectionPage';
 			$this->context  = $context->date();
+
 			return;
 		}
 
 		if ( is_search() ) {
 			$this->graphs[] = 'SearchResultsPage';
 			$this->context  = $context->search();
+
 			return;
 		}
 
@@ -204,33 +228,19 @@ class Schema {
 	 * @return string|array The graph name(s).
 	 */
 	public function getPostGraphs( $post = null ) {
-		$post    = is_object( $post ) ? $post : aioseo()->helpers->getPost();
-		$options = aioseo()->options->noConflict();
+		$post           = is_object( $post ) ? $post : aioseo()->helpers->getPost();
+		$dynamicOptions = aioseo()->dynamicOptions->noConflict();
 
-		$schemaType        = 'default';
-		$schemaTypeOptions = '';
-
-		// Get individual settings.
-		$metaData = aioseo()->meta->metaData->getMetaData( $post );
-		if ( $metaData && ! empty( $metaData->schema_type ) ) {
-			$schemaType        = $metaData->schema_type;
-			$schemaTypeOptions = json_decode( $metaData->schema_type_options );
+		if ( ! $dynamicOptions->searchAppearance->postTypes->has( $post->post_type ) ) {
+			return 'WebPage';
 		}
 
-		// Get global settings if set to default.
-		if ( 'default' === $schemaType && $options->searchAppearance->dynamic->postTypes->has( $post->post_type ) ) {
-			$schemaType = $options->searchAppearance->dynamic->postTypes->{$post->post_type}->schemaType;
-		}
-
+		$schemaType = $dynamicOptions->searchAppearance->postTypes->{$post->post_type}->schemaType;
 		switch ( $schemaType ) {
 			case 'WebPage':
-				$webPageGraph = ! empty( $metaData->schema_type ) && 'default' !== $metaData->schema_type ? $schemaTypeOptions->webPage->webPageType :
-					$options->searchAppearance->dynamic->postTypes->{$post->post_type}->webPageType;
-				return ucfirst( $webPageGraph );
+				return ucfirst( $dynamicOptions->searchAppearance->postTypes->{$post->post_type}->webPageType );
 			case 'Article':
-				$articleGraph = ! empty( $metaData->schema_type ) && 'default' !== $metaData->schema_type ? $schemaTypeOptions->article->articleType :
-					$options->searchAppearance->dynamic->postTypes->{$post->post_type}->articleType;
-				return [ 'WebPage', ucfirst( $articleGraph ) ];
+				return [ 'WebPage', ucfirst( $dynamicOptions->searchAppearance->postTypes->{$post->post_type}->articleType ) ];
 			case 'none':
 				return '';
 			default:
@@ -238,10 +248,12 @@ class Schema {
 				if ( 'default' === $schemaType ) {
 					return 'WebPage';
 				}
+
 				// Check if the schema type isn't already WebPage or one of its child graphs.
 				if ( in_array( $schemaType, $this->webPageGraphs, true ) ) {
 					return ucfirst( $schemaType );
 				}
+
 				return [ 'WebPage', ucfirst( $schemaType ) ];
 		}
 	}
@@ -251,15 +263,26 @@ class Schema {
 	 *
 	 * @since 4.0.13
 	 *
-	 * @param  array $data The graph data.
-	 * @return array       The cleaned graph data.
+	 * @param  array  $data      The graph data.
+	 * @param  string $parentKey The key of the group parent (optional).
+	 * @return array             The cleaned graph data.
 	 */
-	protected function cleanData( $data ) {
+	protected function cleanData( $data, $parentKey = '' ) {
 		foreach ( $data as $k => &$v ) {
 			if ( is_array( $v ) ) {
-				$v = $this->cleanData( $v );
+				$v = $this->cleanData( $v, $k );
+			} elseif ( is_numeric( $v ) ) {
+				// Do nothing.
 			} else {
-				$v = trim( wp_strip_all_tags( $v ) );
+				// Check if the prop can contain some HTML tags.
+				if (
+					isset( $this->htmlAllowedFields[ $parentKey ] ) &&
+					in_array( $k, $this->htmlAllowedFields[ $parentKey ], true )
+				) {
+					$v = trim( wp_kses_post( $v ) );
+				} else {
+					$v = trim( wp_strip_all_tags( $v ) );
+				}
 			}
 
 			if ( empty( $v ) && ! in_array( $k, $this->nullableFields, true ) ) {
@@ -268,6 +291,7 @@ class Schema {
 				$data[ $k ] = $v;
 			}
 		}
+
 		return $data;
 	}
 }

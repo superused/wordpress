@@ -92,6 +92,22 @@ class Notification extends Model {
 	];
 
 	/**
+	 * Get the list of notifications.
+	 *
+	 * @since 4.1.3
+	 *
+	 * @param  boolean $reset Whether or not to reset the new notifications.
+	 * @return array          An array of notifications.
+	 */
+	public static function getNotifications( $reset = true ) {
+		return [
+			'active'    => self::getAllActiveNotifications(),
+			'new'       => self::getNewNotifications( $reset ),
+			'dismissed' => self::getAllDismissedNotifications()
+		];
+	}
+
+	/**
 	 * Get an array of active notifications.
 	 *
 	 * @since 4.0.0
@@ -101,7 +117,53 @@ class Notification extends Model {
 	public static function getAllActiveNotifications() {
 		$staticNotifications = self::getStaticNotifications();
 		$notifications       = array_values( json_decode( wp_json_encode( self::getActiveNotifications() ), true ) );
+
 		return ! empty( $staticNotifications ) ? array_merge( $staticNotifications, $notifications ) : $notifications;
+	}
+
+	/**
+	 * Get all new notifications. After retrieving them, this will reset them.
+	 * This means that calling this method twice will result in no results
+	 * the second time. The only exception is to pass false as a reset variable to prevent it.
+	 *
+	 * @since 4.1.3
+	 *
+	 * @param  boolean $reset Whether or not to reset the new notifications.
+	 * @return array          An array of new notifications if any exist.
+	 */
+	public static function getNewNotifications( $reset = true ) {
+		$notifications = self::filterNotifications(
+			aioseo()->core->db
+				->start( 'aioseo_notifications' )
+				->where( 'dismissed', 0 )
+				->where( 'new', 1 )
+				->whereRaw( "(start <= '" . gmdate( 'Y-m-d H:i:s' ) . "' OR start IS NULL)" )
+				->whereRaw( "(end >= '" . gmdate( 'Y-m-d H:i:s' ) . "' OR end IS NULL)" )
+				->orderBy( 'start DESC, created DESC' )
+				->run()
+				->models( 'AIOSEO\\Plugin\\Common\\Models\\Notification' )
+		);
+
+		if ( $reset ) {
+			self::resetNewNotifications();
+		}
+
+		return $notifications;
+	}
+
+	/**
+	 * Resets all new notifications.
+	 *
+	 * @since 4.1.3
+	 *
+	 * @return void
+	 */
+	public static function resetNewNotifications() {
+		aioseo()->core->db
+			->update( 'aioseo_notifications' )
+			->where( 'new', 1 )
+			->set( 'new', 0 )
+			->run();
 	}
 
 	/**
@@ -114,12 +176,13 @@ class Notification extends Model {
 	public static function getStaticNotifications() {
 		$staticNotifications = [];
 		$notifications       = [
-			'notification-review'
+			'unlicensed-addons',
+			'review'
 		];
 
 		foreach ( $notifications as $notification ) {
 			switch ( $notification ) {
-				case 'notification-review':
+				case 'review':
 					// If they intentionally dismissed the main notification, we don't show the repeat one.
 					$originalDismissed = get_user_meta( get_current_user_id(), '_aioseo_plugin_review_dismissed', true );
 					if ( '2' !== $originalDismissed ) {
@@ -136,13 +199,27 @@ class Notification extends Model {
 					}
 
 					$activated = aioseo()->internalOptions->internal->firstActivated( time() );
-					if ( $activated > strtotime( '-30 days' ) ) {
+					if ( $activated > strtotime( '-20 days' ) ) {
+						break;
+					}
+
+					$isV3                  = get_option( 'aioseop_options' ) || get_option( 'aioseo_options_v3' );
+					$staticNotifications[] = [
+						'slug'      => 'notification-' . $notification,
+						'component' => 'notifications-' . $notification . ( $isV3 ? '' : '2' )
+					];
+					break;
+				case 'unlicensed-addons':
+					$unlicensedAddons = aioseo()->addons->unlicensedAddons();
+					if ( empty( $unlicensedAddons['addons'] ) ) {
 						break;
 					}
 
 					$staticNotifications[] = [
-						'slug'      => 'notification-review',
-						'component' => 'core-notification-review'
+						'slug'      => 'notification-' . $notification,
+						'component' => 'notifications-' . $notification,
+						'addons'    => $unlicensedAddons['addons'],
+						'message'   => $unlicensedAddons['message']
 					];
 					break;
 			}
@@ -160,12 +237,12 @@ class Notification extends Model {
 	 */
 	public static function getActiveNotifications() {
 		return self::filterNotifications(
-			aioseo()->db
+			aioseo()->core->db
 				->start( 'aioseo_notifications' )
 				->where( 'dismissed', 0 )
 				->whereRaw( "(start <= '" . gmdate( 'Y-m-d H:i:s' ) . "' OR start IS NULL)" )
 				->whereRaw( "(end >= '" . gmdate( 'Y-m-d H:i:s' ) . "' OR end IS NULL)" )
-				->orderBy( 'start DESC' )
+				->orderBy( 'start DESC, created DESC' )
 				->run()
 				->models( 'AIOSEO\\Plugin\\Common\\Models\\Notification' )
 		);
@@ -191,7 +268,7 @@ class Notification extends Model {
 	 */
 	public static function getDismissedNotifications() {
 		return self::filterNotifications(
-			aioseo()->db
+			aioseo()->core->db
 				->start( 'aioseo_notifications' )
 				->where( 'dismissed', 1 )
 				->orderBy( 'updated DESC' )
@@ -209,7 +286,7 @@ class Notification extends Model {
 	 * @return Notification       The notification.
 	 */
 	public static function getNotificationByName( $name ) {
-		return aioseo()->db
+		return aioseo()->core->db
 			->start( 'aioseo_notifications' )
 			->where( 'notification_name', $name )
 			->run()
@@ -231,6 +308,7 @@ class Notification extends Model {
 		$notification = new self;
 		$notification->set( $fields );
 		$notification->save();
+
 		return $notification;
 	}
 
@@ -243,7 +321,7 @@ class Notification extends Model {
 	 * @return void
 	 */
 	public static function deleteNotificationByName( $name ) {
-		aioseo()->db
+		aioseo()->core->db
 			->delete( 'aioseo_notifications' )
 			->where( 'notification_name', $name )
 			->run();
@@ -260,6 +338,14 @@ class Notification extends Model {
 	public static function filterNotifications( $notifications ) {
 		$remainingNotifications = [];
 		foreach ( $notifications as $notification ) {
+			// If announcements are disabled and this is an announcement, skip adding it and move on.
+			if (
+				! aioseo()->options->advanced->announcements &&
+				'success' === $notification->type
+			) {
+				continue;
+			}
+
 			$levels = $notification->level;
 			if ( ! is_array( $levels ) ) {
 				$levels = empty( $notification->level ) ? [ 'all' ] : [ $notification->level ];
@@ -273,6 +359,7 @@ class Notification extends Model {
 
 			$remainingNotifications[] = $notification;
 		}
+
 		return $remainingNotifications;
 	}
 }

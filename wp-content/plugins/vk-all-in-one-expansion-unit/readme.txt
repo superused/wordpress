@@ -1,10 +1,11 @@
 === Plugin Name ===
-Contributors: vektor-inc,kurudrive,hinaloe,jim912,hideokamoto,nc30,SaoriMiyazaki,catherine8007,naoki0h,rickaddison7634,una9,kaorock72,kurishimak
+Contributors: vektor-inc,kurudrive,hinaloe,jim912,hideokamoto,nc30,SaoriMiyazaki,catherine8007,naoki0h,rickaddison7634,una9,kaorock72,kurishimak,chiakikouno
 Donate link:
 Tags: Google Analytics, New posts, Related Posts, sitemap, sns, twitter card, Facebook Page Plugin, OG tags,
 Requires at least: 5.3.0
-Tested up to: 5.8.0
-Stable tag: 9.62.0.0
+Tested up to: 6.0.0
+Requires PHP: 7.2
+Stable tag: 9.77.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,7 +49,6 @@ Many features can be stopped individually.
 [ Others ]
 
 * Print Google Analytics tag
-* Print meta keyword tag
 * Print meta description tag
 * Rewrite the title tag
 * Insert Related Posts
@@ -80,6 +80,153 @@ e.g.
 2. This is an example of SNS cooperation setting screen.
 
 == Changelog ==
+
+= 9.77.0.0 =
+[ Specification Change ][ Custom Post Type Manager ] Change to Cope with Block Editor default
+[ Bug Fix ] Fix register thumbnail on edit screen under welcart environment
+
+= 9.76.3.0 =
+* [ Bug Fix ][ HTML Site Map ] Delete wp_reset_postdata();
+
+= 9.76.2.0 =
+* [ Design Bug Fix ][ Child Page List ] Fixed an issue button positions distorted depending on the theme
+
+= 9.76.1.0 =
+* [ Bug Fix ][ Custom Post Type Manager ] Fix translate
+* [ Bug Fix ][ CSS Optimize lib ] library Update 
+* [ Bug Fix ] Fix load Font Awesome Files on WordPress.com
+* [ Other ][ BreadCrumb ] Update composer library 0.2.2
+
+= 9.76.0.1 =
+* [ Specification Change ] Update VK Font Awesome Versions 0.4.0
+* [ Bug fix ][ Child Page List / Contact section / Page list from ancestor ] Fix duplicate Additional CSS classes.
+
+= 9.75.0.0 =
+* [ Bug fix ] Fixed add common attributes ( attribute from VK Blocks 1.29 - )
+* [ Specification Change ] Use composer vk-term-color
+
+= 9.74.1.0 =
+* [ Bug fix ] Fixed ExUnit icon appearing in other menus
+
+= 9.74.0.0 =
+* [ Google Analytics ][ Add function ] Add option for disable tracking of logged in user
+
+= 9.73.3.0 =
+* [ Bug fix ] Fix Admin Fatal Error 
+
+= 9.73.2.0 =
+* [ Bug fix ] Fix Activate setting page warning
+* [ Bug fix ] Fix Facebook btn brand color
+
+= 9.73.1.0 =
+* [ Bug fix ] Fix admin escape 
+
+= 9.73.0.0 =
+* [ Add function ] Cope with font awesome 6
+* [ Bug fix ][ title ] Fix admin title escape 
+* [ other ] Add ExUnit icon on admin menu
+
+= 9.72.0.0 =
+* [ Delete Function ] Print meta keyword tag
+* [ Delete Function ] Print Favicon
+* [ Delete Function ] Bootstrap
+* [ Delete Function ] TinyMCE Stye
+* [ Delete Function ] VK Blocks
+
+= 9.71.1.1 =
+* [ Bug fix ][ Share Btn ] Cope with other theme
+
+= 9.71.0.27 =
+* [ Add function ] Add bread crumb scheme
+
+= 9.70.2.0 =
+* [ Bug fix ] fix active settingscreen about widget.
+
+= 9.70.1.0 =
+* [ Bug fix ][ sitemap / page-list-from-ancesters / share ] Fix preview on WP5.9
+
+= 9.70.0.0 =
+* [ Specification Change ][ Design Tuning ] Customize panel font size
+
+= 9.69.3.0 =
+* [ Bug Fix ][ OG Title ] Fix custom post type archive page og title bug
+
+= 9.69.2.0 =
+* [ Design Bug Fix ][ Related Posts ] Fix layout in case of long title text
+
+= 9.69.1.0 =
+* [ Design Bug Fix ][ Related Posts ] Fix layout in case of not vektor theme
+
+= 9.69.0.0 =
+* [ Other ] Cope with Lightning G3 Pro Unit 404 Page customize
+* [ Design tuning ] metabox css tuning in edit screen
+
+= 9.68.4.0 =
+* [ Bug fix ][ smooth scroll ] fix scroll top position on admin bar
+
+= 9.68.3.0 =
+* [ Bug fix ][ smooth scroll ] fix scroll top position on lightning g3
+
+= 9.68.2.0 =
+* [ Bug fix ][ smooth scroll ] fix scroll top position on lightning g3
+
+= 9.68.1.0 =
+* [ Bug fix ] fix wp title php error
+
+= 9.68.0.0 =
+* [ Add Function ][ head title ] Add change head title function
+* [ Bug fix ][ SNS ] Fix share button on customize screen
+
+= 9.67.2.0 =
+* [ Other ][ term color ] Fix php error
+
+= 9.67.1.0 =
+* [ Other ][ Smooth scroll ] Description adjustment
+
+= 9.67.0.0 =
+* [ Other ] Partial refactoring
+* [ Other ][ IE Alert ] Add notice to Edge IE mode
+
+= 9.66.2.0 =
+* [ Bug fix ][ SNS ] Fix share button error
+
+= 9.66.1.0 =
+* [ Bug fix ][ 3PR Widget ] Fix layout
+* [ Specification Change ][ Post type Manager ] automatic permalink update
+
+= 9.66.0.0 =
+* [ Specification Change ][ Smooth scroll ] Fix bug on Safari and add CSS mode.
+* [ SNS ] Add copy button.
+
+= 9.65.0.0 =
+* [ Specification Change ] Add filter vk_term_color_taxonomy / vk_get_single_term_with_color / vk_post_view
+
+= 9.64.6.0 =
+* [ Other ][ CTA ] PHPUnit test update
+
+= 9.64.5.0 =
+* [ Bug fix ][ CTA ] Fix Old CTA ( by Custom Fieleds ) Title
+
+= 9.64.4.0 =
+* [ Bug fix ][ Banner widget ] Added due to missing URL input field
+
+= 9.64.3.0 =
+* [ Bug fix ][ Call To Action ] Fix global $post pollution it's bring to bug for child page list and so on.
+
+= 9.64.2.0 =
+* [ Bug fix ][ Call To Action ] Fix comment bug.
+
+= 9.64.1.0 =
+* [ Bug fix ][ Banner Widget ] Fix change banner image on widget setting page
+
+= 9.64.0.0 =
+* [ Specification Change ][ CTA ] Change disable priority by individual post
+
+= 9.63.1.0 =
+* [ Other ][ CTA ] text only.
+
+= 9.63.0.0 =
+* [ Add function ][ CTA ] Add function of change out put action hook.
 
 = 9.62.0.0 =
 * [ Specification Change ][ Child page list ] readmore btn class btn-xs -> btn-sm
@@ -710,7 +857,7 @@ Restore version 9
 * [ Bug fix ][ VK Blocks ][ outer ] Lightning Pro theme（No child） no work bug fix
 
 = 7.7.1 =
-* [Bug fix][ VK Blocks ][ outer ] Child theme no work bug fix
+* [ Bug fix ][ VK Blocks ][ outer ] Child theme no work bug fix
 
 = 7.7.0 =
 * [ Add function ][ CTA ] Add content field free layout function

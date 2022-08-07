@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <urlset
 	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 	xmlns:xhtml="http://www.w3.org/1999/xhtml"
-<?php if ( ! $advanced || ! apply_filters( 'aioseo_sitemap_images', $excludeImages ) ): ?>
+<?php if ( ! aioseo()->sitemap->helpers->excludeImages() ): ?>
 	xmlns:image="https://www.google.com/schemas/sitemap-image/1.1"
 <?php endif; ?>
 >
@@ -25,12 +25,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 	?>
 	<url>
-		<loc<?php echo ! empty( $entry['language'] ) ? ' language="' . $entry['language'] . '"' : ''; ?>><?php aioseo()->sitemap->output->escapeAndEcho( $entry['loc'] ); ?></loc><?php
+		<loc><?php aioseo()->sitemap->output->escapeAndEcho( $entry['loc'] ); ?></loc><?php
 	if ( array_key_exists( 'languages', $entry ) && count( $entry['languages'] ) ) {
-			foreach ( $entry['languages'] as $language ) {
+			foreach ( $entry['languages'] as $subentry ) {
+				if ( empty( $subentry['language'] ) || empty( $subentry['location'] ) ) {
+					continue;
+				}
 			?>
 
-		<xhtml:link rel="alternate" hreflang="<?php echo esc_attr( $language['language'] ); ?>" href="<?php echo esc_url( $language['location'] ); ?>" /><?php
+		<xhtml:link rel="alternate" hreflang="<?php echo esc_attr( $subentry['language'] ); ?>" href="<?php echo esc_url( $subentry['location'] ); ?>" /><?php
 		}
 	}
 	if ( array_key_exists( 'lastmod', $entry ) && $entry['lastmod'] ) {
@@ -48,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<priority><?php aioseo()->sitemap->output->escapeAndEcho( $entry['priority'] ); ?></priority><?php
 	}
-	if ( array_key_exists( 'images', $entry ) && $entry['images'] ) {
+	if ( ! aioseo()->sitemap->helpers->excludeImages() && array_key_exists( 'images', $entry ) && $entry['images'] ) {
 			foreach ( $entry['images'] as $image ) {
 				$image = (array) $image;
 			?>

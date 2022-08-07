@@ -3,7 +3,7 @@
 Plugin Name: WP-Polls
 Plugin URI: https://lesterchan.net/portfolio/programming/php/
 Description: Adds an AJAX poll system to your WordPress blog. You can easily include a poll into your WordPress's blog post/page. WP-Polls is extremely customizable via templates and css styles and there are tons of options for you to choose to ensure that WP-Polls runs the way you wanted. It now supports multiple selection of answers.
-Version: 2.75.6
+Version: 2.76.0
 Author: Lester 'GaMerZ' Chan
 Author URI: https://lesterchan.net
 Text Domain: wp-polls
@@ -11,7 +11,7 @@ Text Domain: wp-polls
 
 
 /*
-	Copyright 2021  Lester Chan  (email : lesterchan@gmail.com)
+	Copyright 2022  Lester Chan  (email : lesterchan@gmail.com)
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ Text Domain: wp-polls
 */
 
 ### Version
-define( 'WP_POLLS_VERSION', '2.75.6' );
+define( 'WP_POLLS_VERSION', '2.76.0' );
 
 
 ### Create Text Domain For Translations
@@ -53,10 +53,6 @@ function poll_menu() {
 
 	add_submenu_page( 'wp-polls/polls-manager.php', __( 'Manage Polls', 'wp-polls'), __( 'Manage Polls', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-manager.php' );
 	add_submenu_page( 'wp-polls/polls-manager.php', __( 'Add Poll', 'wp-polls'), __( 'Add Poll', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-add.php' );
-	add_submenu_page( 'wp-polls/polls-manager.php', __( '川柳_新規追加', 'wp-polls'), __( '川柳_新規追加', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-senryu-add.php' );
-	add_submenu_page( 'wp-polls/polls-manager.php', __( '川柳_編集', 'wp-polls'), __( '川柳_編集', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-senryu.php' );
-	add_submenu_page( 'wp-polls/polls-manager.php', __( '写真_新規追加', 'wp-polls'), __( '写真_新規追加', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-photo-add.php' );
-	add_submenu_page( 'wp-polls/polls-manager.php', __( '写真_編集', 'wp-polls'), __( '写真_編集', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-photo.php' );
 	add_submenu_page( 'wp-polls/polls-manager.php', __( 'Poll Options', 'wp-polls'), __( 'Poll Options', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-options.php' );
 	add_submenu_page( 'wp-polls/polls-manager.php', __( 'Poll Templates', 'wp-polls'), __( 'Poll Templates', 'wp-polls' ), 'manage_polls', 'wp-polls/polls-templates.php' );
 }
@@ -222,7 +218,7 @@ function poll_scripts() {
 ### Function: Enqueue Polls Stylesheets/JavaScripts In WP-Admin
 add_action('admin_enqueue_scripts', 'poll_scripts_admin');
 function poll_scripts_admin($hook_suffix) {
-	$poll_admin_pages = array('wp-polls/polls-manager.php', 'wp-polls/polls-add.php', 'wp-polls/polls-photo.php', 'wp-polls/polls-photo-add.php', 'wp-polls/polls-senryu.php', 'wp-polls/polls-senryu-add.php', 'wp-polls/polls-options.php', 'wp-polls/polls-templates.php', 'wp-polls/polls-uninstall.php');
+	$poll_admin_pages = array('wp-polls/polls-manager.php', 'wp-polls/polls-add.php', 'wp-polls/polls-options.php', 'wp-polls/polls-templates.php', 'wp-polls/polls-uninstall.php');
 	if(in_array($hook_suffix, $poll_admin_pages, true)) {
 		wp_enqueue_style('wp-polls-admin', plugins_url('wp-polls/polls-admin-css.css'), false, WP_POLLS_VERSION, 'all');
 		wp_enqueue_script('wp-polls-admin', plugins_url('wp-polls/polls-admin-js.js'), array('jquery'), WP_POLLS_VERSION, true);
@@ -754,7 +750,13 @@ if ( ! function_exists( 'get_ipaddress' ) ) {
 	}
 }
 function poll_get_ipaddress() {
-	return apply_filters( 'wp_polls_ipaddress', wp_hash( get_ipaddress() ) );
+	$ip = get_ipaddress();
+	$poll_options = get_option( 'poll_options' );
+	if ( ! empty( $poll_options ) && ! empty( $poll_options['ip_header'] ) && ! empty( $_SERVER[ $poll_options['ip_header'] ] ) ) {
+		$ip = esc_attr( $_SERVER[ $poll_options['ip_header'] ] );
+	}
+
+	return apply_filters( 'wp_polls_ipaddress', wp_hash( $ip ) );
 }
 function poll_get_hostname() {
 	$hostname = gethostbyaddr( get_ipaddress() );
@@ -1363,7 +1365,7 @@ function vote_poll_process($poll_id, $poll_aid_array = [])
 	}
 
 	if (empty($poll_aid_array)) {
-		throw new InvalidArgumentException(sprintf(__('No anwsers given for Poll ID #%s', 'wp-polls'), $poll_id));
+		throw new InvalidArgumentException(sprintf(__('No answers given for Poll ID #%s', 'wp-polls'), $poll_id));
 	}
 
 	if($poll_id === 0) {
@@ -1400,8 +1402,7 @@ function vote_poll_process($poll_id, $poll_aid_array = [])
 	if ( $poll_logging_method === 1 || $poll_logging_method === 3 ) {
 		$cookie_expiry = (int) get_option('poll_cookielog_expiry');
 		if ($cookie_expiry === 0) {
-			// $cookie_expiry = YEAR_IN_SECONDS;
-			$cookie_expiry = strtotime(date('Y-m-d', current_time('timestamp') + 86400)) - 32400 - $pollip_timestamp;
+			$cookie_expiry = YEAR_IN_SECONDS;
 		}
 		setcookie( 'voted_' . $poll_id, implode(',', $poll_aid_array ), $pollip_timestamp + $cookie_expiry, apply_filters( 'wp_polls_cookiepath', SITECOOKIEPATH ) );
 	}
@@ -1853,8 +1854,6 @@ function polls_activate() {
 							  "polla_qid int(10) NOT NULL default '0'," .
 							  "polla_answers varchar(200) character set utf8 NOT NULL default ''," .
 							  "polla_votes int(10) NOT NULL default '0'," .
-							  "polla_datas text default NULL," .
-							  "polla_type text default NULL," .
 							  "PRIMARY KEY  (polla_aid)" .
 							  ") $charset_collate;";
 	$create_table['pollsip'] = "CREATE TABLE $wpdb->pollsip (" .
@@ -1946,8 +1945,12 @@ function polls_activate() {
 	add_option('poll_cookielog_expiry', 0);
 	add_option('poll_template_pollarchivepagingheader', '');
 	add_option('poll_template_pollarchivepagingfooter', '');
+
 	// Database Upgrade For WP-Polls 2.50
 	delete_option('poll_archive_show');
+
+	// Database Upgrade for WP-Polls 2.76
+	add_option( 'poll_options', array( 'ip_header' => '' ) );
 
 	// Index
 	$index = $wpdb->get_results( "SHOW INDEX FROM $wpdb->pollsip;" );

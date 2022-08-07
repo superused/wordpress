@@ -41,6 +41,8 @@ class VueSettings {
 		'showUpgradeBar'  => true,
 		'showSetupWizard' => true,
 		'toggledCards'    => [
+			'dashboardOverview'            => true,
+			'dashboardSeoSetup'            => true,
 			'dashboardSeoSiteScore'        => true,
 			'dashboardNotifications'       => true,
 			'dashboardSupport'             => true,
@@ -61,7 +63,6 @@ class VueSettings {
 			'rssSitemapSettings'           => true,
 			'rssAdditionalPages'           => true,
 			'rssAdvancedSettings'          => true,
-			'htmlSitemap'                  => true,
 			'additionalPages'              => true,
 			'advancedSettings'             => true,
 			'videoSitemapSettings'         => true,
@@ -84,6 +85,7 @@ class VueSettings {
 			'searchSchema'                 => true,
 			'searchMediaAttachments'       => true,
 			'searchAdvanced'               => true,
+			'searchAdvancedCrawlCleanup'   => true,
 			'authorArchives'               => true,
 			'dateArchives'                 => true,
 			'searchArchives'               => true,
@@ -93,6 +95,8 @@ class VueSettings {
 			'localBusinessOpeningHours'    => true,
 			'locationsSettings'            => true,
 			'advancedLocationsSettings'    => true,
+			'localBusinessMapsApiKey'      => true,
+			'localBusinessMapsSettings'    => true,
 			'robotsEditor'                 => true,
 			'badBotBlocker'                => true,
 			'databaseTools'                => true,
@@ -105,13 +109,18 @@ class VueSettings {
 			'fullSiteRedirectsRelocate'    => true,
 			'fullSiteRedirectsAliases'     => true,
 			'fullSiteRedirectsCanonical'   => true,
-			'fullSiteRedirectsHttpHeaders' => true
+			'fullSiteRedirectsHttpHeaders' => true,
+			'htmlSitemap'                  => true,
+			'htmlSitemapSettings'          => true,
+			'htmlSitemapAdvancedSettings'  => true,
+			'linkAssistantSettings'        => true
 		],
 		'toggledRadio'    => [
 			'locationsShowOnWebsite'        => 'widget',
 			'breadcrumbsShowOnWebsite'      => 'shortcode',
 			'breadcrumbsShowMoreSeparators' => false,
-			'searchShowMoreSeparators'      => false
+			'searchShowMoreSeparators'      => false,
+			'overviewPostType'              => 'post',
 		],
 		'internalTabs'    => [
 			'authorArchives'    => 'title-description',
@@ -176,7 +185,7 @@ class VueSettings {
 	}
 
 	/**
-	 * Retrieve an settings or null if missing.
+	 * Retrieve a setting or null if missing.
 	 *
 	 * @since 4.0.0
 	 *
@@ -185,11 +194,13 @@ class VueSettings {
 	 * @return mixed             The value from the settings or default/null.
 	 */
 	public function __call( $name, $arguments = [] ) {
-		return isset( $this->settings[ $name ] ) ? $this->settings[ $name ] : ( ! empty( $arguments[0] ) ? $arguments[0] : $this->getDefault( $name ) );
+		$value = isset( $this->settings[ $name ] ) ? $this->settings[ $name ] : ( ! empty( $arguments[0] ) ? $arguments[0] : $this->getDefault( $name ) );
+
+		return $value;
 	}
 
 	/**
-	 * Retrieve an settings or null if missing.
+	 * Retrieve a setting or null if missing.
 	 *
 	 * @since 4.0.0
 	 *
@@ -197,7 +208,9 @@ class VueSettings {
 	 * @return mixed        The value from the settings or default/null.
 	 */
 	public function __get( $name ) {
-		return isset( $this->settings[ $name ] ) ? $this->settings[ $name ] : $this->getDefault( $name );
+		$value = isset( $this->settings[ $name ] ) ? $this->settings[ $name ] : $this->getDefault( $name );
+
+		return $value;
 	}
 
 	/**

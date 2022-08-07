@@ -68,25 +68,35 @@ function show_sitemap( $content ) {
  */
 function veu_show_sitemap( $content ) {
 	global $is_pagewidget;
+
 	if ( $is_pagewidget ) {
 		return $content; }
-	wp_reset_postdata(); // need under other section / ex:child page index
+
+	// 404ページの内容を G3 ProUnit で指定の記事本文に書き換えた場合に表示されないように
+	if ( is_404() ) {
+		return $content; }
+
+	// ↓ のコメントを見る限り child page index などで必要らしいが、見た限りなくても困らないように見える。
+	// wp_reset_postdata(); // need under other section / ex:child page index
+
+	// wp_reset_postdata(); があると、VK 投稿リストブロックで get_the_excerpt() でこの関数が走ってしまい、抜粋の次の author 情報がリセットされて、以降の表示要素の $post が狂ってしまうので一旦コメントアウト
+	// もし wp_reset_postdata(); がない事により不具合が発生するようなら再検討
 	global $post;
-	$enable = get_post_meta( $post->ID, 'vkExUnit_sitemap', true );
-	if ( $enable ) {
-		return $content . "\n" . do_shortcode( '[vkExUnit_sitemap]' );
+	if ( $post ) {
+		$enable = get_post_meta( $post->ID, 'vkExUnit_sitemap', true );
+		if ( $enable ) {
+			return $content . "\n" . do_shortcode( '[vkExUnit_sitemap]' );
+		}
 	}
 	return $content;
 }
 
 function vkExUnit_sitemap( $attr ) {
 
-	include dirname( dirname( __FILE__ ) ) . '/vk-blocks/hidden-utils.php';
-
 	$classes = '';
-	if ( function_exists( 'vk_add_hidden_class' ) ) {
-		if ( vk_add_hidden_class( $classes, $attr ) ) {
-			$classes .= ' ' . vk_add_hidden_class( $classes, $attr );
+	if ( function_exists( 'veu_add_common_attributes_class' ) ) {
+		if ( veu_add_common_attributes_class( $classes, $attr ) ) {
+			$classes .= ' ' . veu_add_common_attributes_class( $classes, $attr );
 		}
 	}
 
@@ -285,17 +295,18 @@ function vkExUnit_save_custom_field_sitemapData( $post_id ) {
 
 add_action( 'init', 'veu_sitemap_block_setup', 15 );
 function veu_sitemap_block_setup() {
-	global $common_attributes;
 	if ( function_exists( 'register_block_type' ) ) {
 		register_block_type(
 			'vk-blocks/sitemap',
 			array(
-				'attributes'      => array(
-					'className' => array(
-						'type'    => 'string',
-						'default' => '',
+				'attributes'      => array_merge(
+					array(
+						'className' => array(
+							'type'    => 'string',
+							'default' => '',
+						),
 					),
-					$common_attributes,
+					veu_common_attributes()
 				),
 				'editor_script'   => 'veu-block',
 				'editor_style'    => 'veu-block-editor',

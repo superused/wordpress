@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use AIOSEO\Plugin\Common\Models;
+
 /**
  * Abstract class that Pro and Lite both extend.
  *
@@ -18,49 +20,25 @@ class Main {
 	 * @since 4.0.0
 	 */
 	public function __construct() {
-		$this->media = new Media();
+		$this->media     = new Media();
+		$this->queryArgs = new QueryArgs();
 
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueAssets' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueTranslations' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueFrontEndAssets' ] );
 		add_action( 'admin_footer', [ $this, 'adminFooter' ] );
 	}
 
 	/**
-	 * Enqueue styles.
+	 * Enqueues the translations seperately so it can be called from anywhere.
 	 *
-	 * @since 4.0.0
+	 * @since 4.1.9
 	 *
 	 * @return void
 	 */
-	public function enqueueAssets() {
-		// Scripts.
-		aioseo()->helpers->enqueueScript(
-			'aioseo-app',
-			'js/app.js'
-		);
-		aioseo()->helpers->enqueueScript(
-			'aioseo-vendors',
-			'js/chunk-vendors.js'
-		);
-		aioseo()->helpers->enqueueScript(
-			'aioseo-common',
-			'js/chunk-common.js'
-		);
-
-		// Styles.
-		$rtl = is_rtl() ? '.rtl' : '';
-		aioseo()->helpers->enqueueStyle(
-			'aioseo-common',
-			"css/chunk-common$rtl.css"
-		);
-		aioseo()->helpers->enqueueStyle(
-			'aioseo-vendors',
-			"css/chunk-vendors$rtl.css"
-		);
-		aioseo()->helpers->enqueueStyle(
-			'aioseo-app-style',
-			"css/app$rtl.css"
-		);
+	public function enqueueTranslations() {
+		aioseo()->core->assets->load( 'src/vue/standalone/app/main.js', [], [
+			'translations' => aioseo()->helpers->getJedLocaleData( 'all-in-one-seo-pack' )
+		], 'aioseoTranslations' );
 	}
 
 	/**
@@ -71,15 +49,15 @@ class Main {
 	 * @return void
 	 */
 	public function enqueueFrontEndAssets() {
-		if ( ! is_user_logged_in() || ! current_user_can( 'aioseo_manage_seo' ) ) {
+		$canManageSeo = apply_filters( 'aioseo_manage_seo', 'aioseo_manage_seo' );
+		if (
+			! is_admin_bar_showing() ||
+			! ( current_user_can( $canManageSeo ) || aioseo()->access->canManage() )
+		) {
 			return;
 		}
 
-		// Styles.
-		aioseo()->helpers->enqueueStyle(
-			'aioseo-admin-bar',
-			'css/aioseo-admin-bar.css'
-		);
+		aioseo()->core->assets->enqueueCss( 'admin-bar.css', [], 'src/vue/assets/scss/app/admin-bar.scss' );
 	}
 
 	/**

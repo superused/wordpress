@@ -270,6 +270,32 @@ class Tags {
 		],
 		'pagedFormat'         => [
 			'page_number'
+		],
+		'schema'              => [
+			'author_first_name',
+			'author_last_name',
+			'author_name',
+			'author_url',
+			'taxonomy_title',
+			'categories',
+			'current_date',
+			'current_day',
+			'current_month',
+			'current_year',
+			'custom_field',
+			'tax_name',
+			'permalink',
+			'post_content',
+			'post_date',
+			'post_day',
+			'post_excerpt',
+			'post_excerpt_only',
+			'post_month',
+			'post_title',
+			'post_year',
+			'separator_sa',
+			'site_title',
+			'tagline'
 		]
 	];
 
@@ -324,6 +350,11 @@ class Tags {
 				'id'          => 'author_last_name',
 				'name'        => __( 'Author Last Name', 'all-in-one-seo-pack' ),
 				'description' => __( 'The last name of the post author.', 'all-in-one-seo-pack' )
+			],
+			[
+				'id'          => 'author_url',
+				'name'        => __( 'Author URL', 'all-in-one-seo-pack' ),
+				'description' => __( 'The URL of the author page.', 'all-in-one-seo-pack' )
 			],
 			[
 				'id'          => 'archive_title',
@@ -962,6 +993,10 @@ class Tags {
 				$name = $author->last_name;
 
 				return empty( $name ) && $sampleData ? wp_get_current_user()->last_name : $author->last_name;
+			case 'author_url':
+				$authorUrl = get_author_posts_url( $author->ID );
+
+				return ! empty( $authorUrl ) ? $authorUrl : '';
 			case 'separator_sa':
 				return aioseo()->helpers->decodeHtmlEntities( aioseo()->options->searchAppearance->global->separator );
 			case 'search_term':

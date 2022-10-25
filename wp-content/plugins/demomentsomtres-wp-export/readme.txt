@@ -1,22 +1,22 @@
-=== DeMomentSomTres Export ===
+=== DeMomentSomTres WordPress Export Posts With Images ===
 Contributors: marcqueralt
 Tags: export, attachments
 Requires at least: 3.4
-Tested up to: 5.4.1
+Tested up to: 6.0.1
 Stable tag: trunk
 License: GPLv2 or later
 
-DeMomentSomTres Export to help exporting filtered WordPress data with required attachment files that usually get lost.
+DeMomentSomTres WordPress Export Posts With Images to help exporting filtered WordPress data with required attachment files that usually get lost.
 
 == Description ==
 
-DeMomentSomTres Export was build because [DMS3 Marketing](https://www.dms3marketing.com) had a customer with a very big blog that had to be imported with all attachments.
+DeMomentSomTres WordPress Export Posts With Images was build because [DeMomentSomTres Digital Marketing Agency](https://www.demomentsomtres.com/en/) had a customer with a very big blog that had to be imported with all attachments.
 
 This plugin is a modified version of the export procedure.
 
 Standard export procedure can be recovered unistalling or deactivating this plugin.
 
-More information, comments and support: [demomentsomtres WordPress export plugin](https://www.dms3marketing.com/en/wordpress-plugins/demomentsomtres-wordpress-export-post-with-images/).
+More information, comments and support: [Demomentsomtres WordPress export plugin](https://www.demomentsomtres.com/en/wordpress-plugins/demomentsomtres-wordpress-export-post-with-images/).
 
 == Frequently Asked Questions ==
 
@@ -37,6 +37,9 @@ Upload the plugin.
 N/A
 
 == Changelog ==
+
+= 20200825 =
+* Compatibility Update
 
 = 20200610 =
 * Eliminate Freemius

@@ -194,6 +194,19 @@ if ( ! empty( $options['snsBtn_position']['after'] ) ) {
 </td>
 </tr>
 
+<tr>
+	<th><label ><?php _e( 'Output action hook (optional)', 'vk-all-in-one-expansion-unit' ); ?></label></th>
+<td>
+<p>
+<?php _e( 'By default, it is output at the bottom of the content.', 'vk-all-in-one-expansion-unit' ); ?><br>
+<?php _e( 'If you want to change the location of share buttons, please enter the action hook name.', 'vk-all-in-one-expansion-unit' ); ?><br>
+<?php _e( 'If you want to multiple display that, input action hook name separated by line breaks.', 'vk-all-in-one-expansion-unit' ); ?><br>
+<?php _e( 'Ex) lightning_comment_before', 'vk-all-in-one-expansion-unit' ); ?>
+</p>	
+<textarea name="vkExUnit_sns_options[hook_point]" id="hook_point" style="width:100%;" rows="2"><?php echo esc_html( $options['hook_point'] ); ?></textarea>
+</td>
+</tr>
+
 </table>
 
 <?php submit_button(); ?>

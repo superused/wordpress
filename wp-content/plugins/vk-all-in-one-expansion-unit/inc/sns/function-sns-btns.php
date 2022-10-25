@@ -5,10 +5,28 @@
  * @package vk-all-in-one-expantion-unit
  */
 
-if ( 'content' === veu_content_filter_state() ) {
+ // global なので $options にすると ExUnit 全体の $options の値を汚染するので $sns_options を使用
+$sns_options = veu_get_sns_options();
+if ( ! empty( $sns_options['hook_point'] ) ) {
+	$hook_points = explode( "\n", $sns_options['hook_point'] );
+	foreach ( $hook_points as $hook_point ) {
+		add_action( $hook_point, 'veu_the_sns_btns' );
+	}
+} elseif ( 'content' === veu_content_filter_state() ) {
 	add_filter( 'the_content', 'veu_add_sns_btns', 200, 1 );
 } else {
 	add_action( 'loop_end', 'veu_add_sns_btns_loopend' );
+}
+
+
+/**
+ * Display share button on hook point
+ *
+ * @param object $query : main query.
+ * @return void
+ */
+function veu_the_sns_btns( $query ) {
+	echo veu_get_sns_btns();
 }
 
 /**

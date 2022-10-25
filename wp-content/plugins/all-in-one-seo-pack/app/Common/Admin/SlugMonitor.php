@@ -117,15 +117,21 @@ class SlugMonitor {
 
 		$message = __( 'The permalink for this post just changed! This could result in 404 errors for your site visitors.', 'all-in-one-seo-pack' );
 
-		aioseo()->wpNotices->addNotice( $message, 'warning', [
-			'actions' => [
-				[
-					'url'    => $redirectUrl,
-					'label'  => __( 'Add Redirect to improve SEO', 'all-in-one-seo-pack' ),
-					'target' => '_blank'
-				]
-			]
-		] );
+		// Default notice redirecting to the Redirects screen.
+		$action = [
+			'url'    => $redirectUrl,
+			'label'  => __( 'Add Redirect to improve SEO', 'all-in-one-seo-pack' ),
+			'target' => '_blank',
+			'class'  => 'aioseo-redirects-slug-changed'
+		];
+
+		// If redirects is active we'll show add-redirect in a modal.
+		if ( aioseo()->addons->getLoadedAddon( 'redirects' ) ) {
+			// We need to remove the target here so the action keeps the url used by the add-redirect modal.
+			unset( $action['target'] );
+		}
+
+		aioseo()->wpNotices->addNotice( $message, 'warning', [ 'actions' => [ $action ] ], [ 'posts' ] );
 	}
 
 	/**
@@ -145,6 +151,11 @@ class SlugMonitor {
 
 		// Don't do anything if we're not published.
 		if ( 'publish' !== $post->post_status || 'publish' !== $postBefore->post_status ) {
+			return false;
+		}
+
+		// Don't do anything is the post type is not public.
+		if ( ! is_post_type_viewable( $post->post_type ) ) {
 			return false;
 		}
 

@@ -1,7 +1,7 @@
 <?php
 /* THIS IS A GENERATED FILE. DO NOT EDIT DIRECTLY. */
 $manifestJson = '{
-  "admin-bar.css": "css/admin-bar.13f94dbd.css",
-  "blocks-editor.css": "css/blocks-editor.b36533f3.css",
-  "integrations.css": "css/integrations.4de20982.css"
+  "src/vue/assets/scss/app/admin-bar.scss": "css/admin-bar.12d38ef7.css",
+  "src/vue/assets/scss/blocks-editor.scss": "css/blocks-editor.ff3c2caf.css",
+  "src/vue/assets/scss/integrations/main.scss": "css/main.79c6b900.css"
 }';

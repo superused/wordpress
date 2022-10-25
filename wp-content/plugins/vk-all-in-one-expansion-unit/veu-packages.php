@@ -1,6 +1,10 @@
 <?php
-function veu_get_packages() {
+function veu_get_packages( $is_block_theme = null ) {
 	$required_packages = array();
+	if ( null === $is_block_theme ) {
+		$is_block_theme = function_exists( 'wp_is_block_theme' ) && wp_is_block_theme();
+	}
+
 	/*
 	Example :
 	$required_packages[] = array(
@@ -165,13 +169,24 @@ function veu_get_packages() {
 		'include'     => 'meta-description.php',
 	);
 
-	/*
-	  Breadcrumb
-	/*-------------------------------------------*/
+	/**
+	 * Structured data - Article
+	 */
+	$required_packages[] = array(
+		'name'        => 'article_structure_data',
+		'title'       => __( 'Structured data - Article', 'vk-all-in-one-expansion-unit' ),
+		'description' => __( 'Output the Structured data of the Article to the html header.', 'vk-all-in-one-expansion-unit' ),
+		'default'     => true,
+		'include'     => 'article-structure-data/class-vk-article-structure-data.php',
+	);
+
+	/**
+	 * Structured data - Breadcrumb
+	 */
 	$required_packages[] = array(
 		'name'        => 'breadcrumb',
-		'title'       => __( 'Breadcrumb', 'vk-all-in-one-expansion-unit' ),
-		'description' => __( 'Output the schema data of the breadcrumb to the html header.', 'vk-all-in-one-expansion-unit' ) . __( 'It is important to accurately convey the hierarchy of the site to search engines such as Google.' ) . __( 'However not required if you are viewing a breadcrumb with schema data on the page.', 'vk-all-in-one-expansion-unit' ),
+		'title'       => __( 'Structured data - Breadcrumb', 'vk-all-in-one-expansion-unit' ),
+		'description' => __( 'Output the Structured data of the Breadcrumb to the html header.', 'vk-all-in-one-expansion-unit' ) . '<br />' . __( 'It is important to accurately convey the hierarchy of the site to search engines such as Google.', 'vk-all-in-one-expansion-unit' ) . __( 'However not required if you are viewing a breadcrumb with schema data on the page.', 'vk-all-in-one-expansion-unit' ),
 		'default'     => false,
 		'include'     => 'vk-breadcrumb/config.php',
 	);
@@ -224,7 +239,7 @@ function veu_get_packages() {
 				'enable_only' => 1,
 			),
 		),
-		'default'     => true,
+		'default'     => $is_block_theme ? false : true,
 		'include'     => 'other-widget/other-widget.php',
 	);
 
@@ -260,7 +275,7 @@ function veu_get_packages() {
 				'enable_only' => 1,
 			),
 		),
-		'default'     => true,
+		'default'     => $is_block_theme ? false : true,
 		'include'     => 'default-thumbnail/default-thumbnail.php',
 	);
 
@@ -323,7 +338,7 @@ function veu_get_packages() {
 				'enable_only' => 1,
 			),
 		),
-		'default'       => true,
+		'default'       => $is_block_theme ? false : true,
 		'include'       => 'contact-section/contact-section.php',
 		'use_ex_blocks' => true,
 	);
@@ -364,7 +379,7 @@ function veu_get_packages() {
 				'enable_only' => 1,
 			),
 		),
-		'default'     => true,
+		'default'     => $is_block_theme ? false : true,
 		'include'     => 'call-to-action/call-to-action-config.php',
 	);
 
@@ -382,7 +397,7 @@ function veu_get_packages() {
 				'enable_only' => 1,
 			),
 		),
-		'default'     => true,
+		'default'     => $is_block_theme ? false : true,
 		'include'     => 'insert-ads.php',
 	);
 	/*
@@ -530,7 +545,7 @@ function veu_get_packages() {
 		'name'        => 'nav_menu_class_custom',
 		'title'       => __( 'Navi menu class custom', 'vk-all-in-one-expansion-unit' ),
 		'description' => __( 'Current class tuning of navi menu.', 'vk-all-in-one-expansion-unit' ),
-		'default'     => true,
+		'default'     => $is_block_theme ? false : true,
 		'include'     => 'nav-menu-class-custom.php',
 	);
 

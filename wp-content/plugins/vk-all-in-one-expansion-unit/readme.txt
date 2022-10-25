@@ -1,11 +1,11 @@
 === Plugin Name ===
-Contributors: vektor-inc,kurudrive,hinaloe,jim912,hideokamoto,nc30,SaoriMiyazaki,catherine8007,naoki0h,rickaddison7634,una9,kaorock72,kurishimak,chiakikouno
+Contributors: vektor-inc,kurudrive,hinaloe,jim912,hideokamoto,nc30,SaoriMiyazaki,catherine8007,naoki0h,rickaddison7634,una9,kaorock72,kurishimak,chiakikouno,daikiweb23
 Donate link:
 Tags: Google Analytics, New posts, Related Posts, sitemap, sns, twitter card, Facebook Page Plugin, OG tags,
 Requires at least: 5.3.0
-Tested up to: 6.0.0
+Tested up to: 6.0.2
 Requires PHP: 7.2
-Stable tag: 9.77.0.0
+Stable tag: 9.84.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,52 @@ e.g.
 2. This is an example of SNS cooperation setting screen.
 
 == Changelog ==
+
+= 9.84.1.0 =
+[ Bug fix ][ Google Analytics ] Fix PHP error in 9.82.0.0
+[ Specification Change ][ Google Analytics ] Remove Customizer Setting.
+
+= 9.84.0.0 =
+[ Specification Change ][ title tag ] Changed the title tag of the Home page so that the title tag specified in the fixed page has priority over the content specified in "ExUnit > Main setting screen".
+
+= 9.83.1.0 =
+[ Bug fix ][ article structure ] Fix warning on 404 page.
+
+= 9.83.0.0 =
+[ Specification Change ][ body class ] Add post top page to class
+
+= 9.82.0.0 =
+[ Add Function ][ Google Analytics ] Be able to set Both UA and GA4 tag.
+
+= 9.81.3.0 =
+[ Bug fix ]Fixed broken function of article structure data on user edit page
+
+= 9.81.2.0 =
+Update translate
+
+= 9.81.1.0 =
+[ Specification Change ] Change order of active setting
+
+= 9.81.0.0 =
+[ Add function ] Add function of article structure data
+
+= 9.80.1.0 =
+[ Bug fix ] Fixed broken layout of setting page
+
+= 9.80.0.0 =
+[ Add Function ] Add CTA Block.
+[ Other ] Update admin setting page library 2.5.0
+
+= 9.79.0.1 =
+[ Other ] Default setting corresponds to block theme
+[ Other ] Update admin settingpage library 2.4.0
+
+= 9.78.1.0 =
+[ Bug Fix ][ Auto Eycatch ] Fix auto eyecatch do not display
+
+= 9.78.0.0 =
+[ Add function ][ SNS ] Add function of change out put action hook.
+[ Specification Change ][ Page list from ancestor block ] change icon
 
 = 9.77.0.0 =
 [ Specification Change ][ Custom Post Type Manager ] Change to Cope with Block Editor default

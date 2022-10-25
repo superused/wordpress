@@ -109,7 +109,6 @@ class Ping {
 		foreach ( $endpoints as $endpoint ) {
 			foreach ( $sitemapUrls as $url ) {
 				wp_remote_get( $endpoint . urlencode( $url ) );
-				// @TODO: [V4+] Log bad responses using dedicated logger class once available.
 			}
 		}
 	}

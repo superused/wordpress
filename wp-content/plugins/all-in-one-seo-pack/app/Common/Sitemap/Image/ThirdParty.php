@@ -13,6 +13,25 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class ThirdParty {
 	/**
+	 * The post object.
+	 *
+	 * @since 4.2.2
+	 *
+	 * @var WP_Post
+	 */
+	private $post;
+
+	/**
+	 * The parsed post content.
+	 * The post object holds the unparsed content as we need that for Divi.
+	 *
+	 * @since 4.2.5
+	 *
+	 * @var string
+	 */
+	private $parsedPostContent;
+
+	/**
 	 * The image URLs and IDs.
 	 *
 	 * @since 4.2.2
@@ -81,10 +100,12 @@ class ThirdParty {
 	 *
 	 * @since 4.2.2
 	 *
-	 * @param WP_Post $post The post object.
+	 * @param WP_Post $post              The post object.
+	 * @param string  $parsedPostContent The parsed post content.
 	 */
-	public function __construct( $post ) {
-		$this->post = $post;
+	public function __construct( $post, $parsedPostContent ) {
+		$this->post              = $post;
+		$this->parsedPostContent = $parsedPostContent;
 	}
 
 	/**
@@ -98,6 +119,7 @@ class ThirdParty {
 		$integrations = [
 			'acf',
 			'divi',
+			'nextGen',
 			'wooCommerce'
 		];
 
@@ -153,7 +175,7 @@ class ThirdParty {
 			}
 
 			// Capture the value if it's an image URL, but not the default thumbnail from ACF.
-			if ( preg_match( aioseo()->sitemap->image->getImageExtensionRegexPattern(), $value ) && ! preg_match( '/media\/default\.png$/i', $value ) ) {
+			if ( is_string( $value ) && preg_match( aioseo()->sitemap->image->getImageExtensionRegexPattern(), $value ) && ! preg_match( '/media\/default\.png$/i', $value ) ) {
 				$images[] = $value;
 				continue;
 			}
@@ -232,6 +254,54 @@ class ThirdParty {
 		}
 
 		$this->images = array_merge( $this->images, $urls );
+	}
+
+	/**
+	 * Extracts the image IDs of more advanced NextGen Pro gallerlies like the Mosaic and Thumbnail Grid.
+	 *
+	 * @since 4.2.5
+	 *
+	 * @return void
+	 */
+	private function nextGen() {
+		if ( ! defined( 'NGG_PLUGIN_BASENAME' ) && ! defined( 'NGG_PRO_PLUGIN_BASENAME' ) ) {
+			return;
+		}
+
+		preg_match_all( '/data-image-id=\"([0-9]*)\"/i', $this->parsedPostContent, $imageIds );
+		if ( ! empty( $imageIds[1] ) ) {
+			$this->images = array_merge( $this->images, $imageIds[1] );
+		}
+
+		// For this specific check, we only want to parse blocks and do not want to run shortcodes because some NextGen blocks (e.g. Mosaic) are parsed into shortcodes.
+		// And after parsing the shortcodes, the attributes we're looking for are gone.
+		$contentWithBlocksParsed = function_exists( 'do_blocks' ) ? do_blocks( $this->post->post_content ) : $this->post->post_content; // phpcs:disable AIOSEO.WpFunctionUse.NewFunctions
+
+		$imageIds = [];
+		preg_match_all( '/\[ngg.*src="galleries" ids="(.*?)".*\]/i', $contentWithBlocksParsed, $shortcodes );
+		if ( empty( $shortcodes[1] ) ) {
+			return;
+		}
+
+		foreach ( $shortcodes[1] as $shortcode ) {
+			$galleryIds = explode( ',', $shortcode[0] );
+			foreach ( $galleryIds as $galleryId ) {
+				global $nggdb;
+				$galleryImageIds = $nggdb->get_ids_from_gallery( $galleryId );
+				if ( empty( $galleryImageIds ) ) {
+					continue;
+				}
+
+				foreach ( $galleryImageIds as $galleryImageId ) {
+					$image = $nggdb->find_image( $galleryImageId );
+					if ( ! empty( $image ) ) {
+						$imageIds[] = $image->get_permalink();
+					}
+				}
+			}
+		}
+
+		$this->images = array_merge( $this->images, $imageIds );
 	}
 
 	/**

@@ -301,6 +301,7 @@ class wpdb {
 		'term_relationships',
 		'termmeta',
 		'commentmeta',
+		'projects',
 	);
 
 	/**

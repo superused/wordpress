@@ -1,11 +1,11 @@
 <?php
 /*
-  Plugin Name: DeMomentSomTres Export
-  Plugin URI: http://DeMomentSomTres.com/english/wordpress-plugin-export
+  Plugin Name: DeMomentSomTres WordPress Export Posts With Images
+  Plugin URI: https://www.demomentsomtres.com/en/wordpress-plugins/demomentsomtres-wordpress-export-post-with-images/
   Description: DeMomentSomTres Export was build because DeMomentSomTres had a customer with a very big blog that had to be imported without only the required attachment files.
-  Version: 20200610
+  Version: 20220825
   Author: DeMomentSomTres
-  Author URI: http://DeMomentSomTres.com
+  Author URI: https://www.DeMomentSomTres.com/en/
   License: GPLv2 or later
  */
 

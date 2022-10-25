@@ -24,7 +24,7 @@ class FaqPage extends Blocks {
 			[
 				'render_callback' => function( $attributes, $content ) {
 					if ( isset( $attributes['hidden'] ) && true === $attributes['hidden'] ) {
-						return '<!-- AIOSEO - FAQ -->';
+						return '';
 					}
 
 					return $content;

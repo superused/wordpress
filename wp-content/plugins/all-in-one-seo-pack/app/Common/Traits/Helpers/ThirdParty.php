@@ -499,16 +499,16 @@ trait ThirdParty {
 	 *
 	 * @since 4.2.3
 	 *
-	 * @return bool Whether the page is an AMP page (optional).
+	 * @param  string $pluginName The name of the AMP plugin to check for (optional).
+	 * @return bool               Whether the current page is an AMP page.
 	 */
 	public function isAmpPage( $pluginName = '' ) {
-		// AMP
-		if (
-			( ! $pluginName || 'amp' === $pluginName ) &&
-			defined( 'AMP__VERSION' )
-		) {
-			if ( isset( $_GET['amp'] ) ) {
-				return true;
+		// Official AMP plugin.
+		if ( 'amp' === $pluginName ) {
+			// If we're checking for the AMP page plugin specifically, return early if it's not active.
+			// Otherwise, we'll return true if AMP for WP is enabled because the helper method doesn't distinguish between the two.
+			if ( ! defined( 'AMP__VERSION' ) ) {
+				return false;
 			}
 
 			$options = get_option( 'amp-options' );
@@ -517,22 +517,21 @@ trait ThirdParty {
 			}
 		}
 
-		// AMP for WP
-		if (
-			( ! $pluginName || 'amp-for-wp' === $pluginName ) &&
-			defined( 'AMPFORWP_VERSION' )
-		) {
-			// This URL param is set when using plain permalinks.
-			if ( isset( $_GET['amp'] ) ) {
-				return true;
-			}
+		return $this->isAmpPageHelper();
+	}
 
-			global $wp;
-			if ( preg_match( '/amp$/', untrailingslashit( $wp->request ) ) ) {
-				return true;
-			}
-		}
+	/**
+	 * Checks if the current page is an AMP page.
+	 * Helper function for isAmpPage(). Contains common logic that applies to both AMP and AMP for WP.
+	 *
+	 * @since 4.2.4
+	 *
+	 * @return bool Whether the current page is an AMP page.
+	 */
+	private function isAmpPageHelper() {
+		global $wp;
 
-		return false;
+		// This URL param is set when using plain permalinks.
+		return isset( $_GET['amp'] ) || preg_match( '/amp$/', untrailingslashit( $wp->request ) );
 	}
 }

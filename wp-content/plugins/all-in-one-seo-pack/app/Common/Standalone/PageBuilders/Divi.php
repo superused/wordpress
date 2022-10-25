@@ -149,6 +149,7 @@ class Divi extends Base {
 		echo '<div id="aioseo-app-modal" class="et_fb_ignore_iframe"><div class="et_fb_ignore_iframe"></div></div>';
 		echo '<div id="aioseo-settings" class="et_fb_ignore_iframe"></div>';
 		echo '<div id="aioseo-admin" class="et_fb_ignore_iframe"></div>';
+		echo '<div id="aioseo-modal-portal" class="et_fb_ignore_iframe"></div>';
 	}
 
 	/**

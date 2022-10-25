@@ -144,21 +144,6 @@ trait WpContext {
 	}
 
 	/**
-	 * Returns the network ID.
-	 *
-	 * @since 4.0.0
-	 *
-	 * @return int The integer of the blog/site id.
-	 */
-	public function getNetworkId() {
-		if ( is_multisite() ) {
-			return get_network()->site_id;
-		}
-
-		return get_current_blog_id();
-	}
-
-	/**
 	 * Returns the current post object.
 	 *
 	 * @since 4.0.0
@@ -270,11 +255,12 @@ trait WpContext {
 			return $content[ $post->ID ];
 		}
 
-		$postContent          = $this->getPostContent( $post );
-		$postContent          = wp_trim_words( $postContent, 55, '' );
+		$postContent = $this->getPostContent( $post );
+		// Strip images, captions and WP oembed wrappers (e.g. YouTube URLs) from the post content.
+		$postContent          = preg_replace( '/(<figure.*?\/figure>|<img.*?\/>|<div.*?class="wp-block-embed__wrapper".*?>.*?<\/div>)/s', '', $postContent );
 		$postContent          = str_replace( ']]>', ']]&gt;', $postContent );
-		$postContent          = preg_replace( '#(<figure.*\/figure>|<img.*\/>)#', '', $postContent );
-		$content[ $post->ID ] = trim( wp_strip_all_tags( strip_shortcodes( $postContent ) ) );
+		$postContent          = trim( wp_strip_all_tags( strip_shortcodes( $postContent ) ) );
+		$content[ $post->ID ] = wp_trim_words( $postContent, 55, '' );
 
 		return $content[ $post->ID ];
 	}
@@ -565,6 +551,54 @@ trait WpContext {
 		}
 
 		return $screen->post_type === $postType;
+	}
+
+	/**
+	 * Returns if current screen is a post list, optionaly of a post type.
+	 *
+	 * @since 4.2.4
+	 *
+	 * @param  string $postType Post type slug.
+	 * @return bool             Is a post list.
+	 */
+	public function isScreenPostList( $postType = '' ) {
+		$screen = $this->getCurrentScreen();
+		if (
+			! $this->isScreenBase( 'edit' ) ||
+			empty( $screen->post_type )
+		) {
+			return false;
+		}
+
+		if ( ! empty( $postType ) && $screen->post_type !== $postType ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns if current screen is a post edit screen, optionaly of a post type.
+	 *
+	 * @since 4.2.4
+	 *
+	 * @param  string $postType Post type slug.
+	 * @return bool             Is a post editing screen.
+	 */
+	public function isScreenPostEdit( $postType = '' ) {
+		$screen = $this->getCurrentScreen();
+		if (
+			! $this->isScreenBase( 'post' ) ||
+			empty( $screen->post_type )
+		) {
+			return false;
+		}
+
+		if ( ! empty( $postType ) && $screen->post_type !== $postType ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

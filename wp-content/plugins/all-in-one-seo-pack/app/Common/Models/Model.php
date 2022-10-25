@@ -304,6 +304,10 @@ class Model implements \JsonSerializable {
 	 * @return null
 	 */
 	public function delete() {
+		if ( ! $this->exists() ) {
+			return;
+		}
+
 		aioseo()->core->db
 			->delete( $this->table )
 			->where( $this->pk, $this->id )
